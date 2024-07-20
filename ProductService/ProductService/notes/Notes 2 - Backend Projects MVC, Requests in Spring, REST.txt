@@ -1,0 +1,1107 @@
+
+Lecture | Backend Projects: MVC, Requests in Spring, REST
+-----------------------------------------------------------
+
+very imp things we have to do today
+
+depth of springboot in a proper way, Intro to mvc and REST(requests in Spring)
+
+today we will discuss the people who have exp of 3 or 4yrs they also dont know - 
+
+
+how does spring start ?
+------------------------
+@SpringBootApplication what is it and where is it coming from ?
+
+how spring starts 
+
+doubt - MVC is gone as u said in last class we will still study this ?
+MVC and spring mvc is two different things
+
+how to start/create new springboot application ?
+------------------------------------------------
+start.spring.io
+
+Lombok - getter, setter
+PostgreSQL driver - 
+spring web - build web, including RESTful, applications using Spring MVC, uses tomcat as default embedded container
+spring data jpa - persist data in SQL stores with java persistence API using Spring Data and Hibernate ORM
+spring boot actuator - supports built in (or custom) endpoints that let you monitor and manage your application - such as application health, metrics, sessions, etc. basically It helps you to monitor and manage your application like for developers use case to increase like to help developer with more information. actuator helps us to monitor and manage your application.
+
+controller package
+
+@RestController - 
+@GetMapping("/hello") - 
+ResponseEntity -
+return ResponseEntity.ok(body:"Hello");
+
+@DeleteMapping("/hi") - we are not deleting thing but we add to show sgit remoteomething, for a reason
+get, post, put, delete are http calls
+
+now i run the application
+-------------------------
+
+"C:\Program Files\Java\jdk-17.0.5\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.3.3\lib\idea_rt.jar=61495:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.3.3\bin" -Dfile.encoding=UTF-8 -classpath "D:\Projects\ScalerProjects\Backend Projects\Ecom Project\ProductService\ProductService\target\classes;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.3.1\spring-boot-starter-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter\3.3.1\spring-boot-starter-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot\3.3.1\spring-boot-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.3.1\spring-boot-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.3.1\spring-boot-starter-logging-3.3.1.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-classic\1.5.6\logback-classic-1.5.6.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-core\1.5.6\logback-core-1.5.6.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.23.1\log4j-to-slf4j-2.23.1.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-api\2.23.1\log4j-api-2.23.1.jar;C:\Users\vivek\.m2\repository\org\slf4j\jul-to-slf4j\2.0.13\jul-to-slf4j-2.0.13.jar;C:\Users\vivek\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\vivek\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.3.1\spring-boot-actuator-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator\3.3.1\spring-boot-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.17.1\jackson-databind-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.17.1\jackson-annotations-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.17.1\jackson-core-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.17.1\jackson-datatype-jsr310-2.17.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-observation\1.13.1\micrometer-observation-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-commons\1.13.1\micrometer-commons-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-jakarta9\1.13.1\micrometer-jakarta9-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-core\1.13.1\micrometer-core-1.13.1.jar;C:\Users\vivek\.m2\repository\org\hdrhistogram\HdrHistogram\2.2.2\HdrHistogram-2.2.2.jar;C:\Users\vivek\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.3.1\spring-boot-starter-data-jpa-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.3.1\spring-boot-starter-aop-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-aop\6.1.10\spring-aop-6.1.10.jar;C:\Users\vivek\.m2\repository\org\aspectj\aspectjweaver\1.9.22\aspectjweaver-1.9.22.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.3.1\spring-boot-starter-jdbc-3.3.1.jar;C:\Users\vivek\.m2\repository\com\zaxxer\HikariCP\5.1.0\HikariCP-5.1.0.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-jdbc\6.1.10\spring-jdbc-6.1.10.jar;C:\Users\vivek\.m2\repository\org\hibernate\orm\hibernate-core\6.5.2.Final\hibernate-core-6.5.2.Final.jar;C:\Users\vivek\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\vivek\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\vivek\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\vivek\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\vivek\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\vivek\.m2\repository\com\fasterxml\classmate\1.7.0\classmate-1.7.0.jar;C:\Users\vivek\.m2\repository\net\bytebuddy\byte-buddy\1.14.17\byte-buddy-1.14.17.jar;C:\Users\vivek\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.5\jaxb-runtime-4.0.5.jar;C:\Users\vivek\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.5\jaxb-core-4.0.5.jar;C:\Users\vivek\.m2\repository\org\eclipse\angus\angus-activation\2.0.2\angus-activation-2.0.2.jar;C:\Users\vivek\.m2\repository\org\glassfish\jaxb\txw2\4.0.5\txw2-4.0.5.jar;C:\Users\vivek\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\vivek\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\vivek\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\vivek\.m2\repository\org\springframework\data\spring-data-jpa\3.3.1\spring-data-jpa-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\data\spring-data-commons\3.3.1\spring-data-commons-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-orm\6.1.10\spring-orm-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-context\6.1.10\spring-context-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-tx\6.1.10\spring-tx-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-beans\6.1.10\spring-beans-6.1.10.jar;C:\Users\vivek\.m2\repository\org\slf4j\slf4j-api\2.0.13\slf4j-api-2.0.13.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-aspects\6.1.10\spring-aspects-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.3.1\spring-boot-starter-web-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.3.1\spring-boot-starter-json-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.17.1\jackson-datatype-jdk8-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.17.1\jackson-module-parameter-names-2.17.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.3.1\spring-boot-starter-tomcat-3.3.1.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.25\tomcat-embed-core-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.25\tomcat-embed-el-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.25\tomcat-embed-websocket-10.1.25.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-web\6.1.10\spring-web-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-webmvc\6.1.10\spring-webmvc-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-expression\6.1.10\spring-expression-6.1.10.jar;C:\Users\vivek\.m2\repository\org\postgresql\postgresql\42.7.3\postgresql-42.7.3.jar;C:\Users\vivek\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\vivek\.m2\repository\org\projectlombok\lombok\1.18.32\lombok-1.18.32.jar;C:\Users\vivek\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.2\jakarta.xml.bind-api-4.0.2.jar;C:\Users\vivek\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.3\jakarta.activation-api-2.1.3.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-core\6.1.10\spring-core-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-jcl\6.1.10\spring-jcl-6.1.10.jar" dev.vivek.ProductService.ProductServiceApplication
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2024-07-18T01:06:29.333+05:30  INFO 24692 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : Starting ProductServiceApplication using Java 17.0.5 with PID 24692 (D:\Projects\ScalerProjects\Backend Projects\Ecom Project\ProductService\ProductService\target\classes started by vivek in D:\Projects\ScalerProjects\Backend Projects\Ecom Project\ProductService\ProductService)
+2024-07-18T01:06:29.338+05:30  INFO 24692 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-07-18T01:06:30.774+05:30  INFO 24692 --- [ProductService] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-18T01:06:30.805+05:30  INFO 24692 --- [ProductService] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 0 JPA repository interfaces.
+2024-07-18T01:06:31.947+05:30  INFO 24692 --- [ProductService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-18T01:06:31.962+05:30  INFO 24692 --- [ProductService] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-18T01:06:31.962+05:30  INFO 24692 --- [ProductService] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-18T01:06:32.058+05:30  INFO 24692 --- [ProductService] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-18T01:06:32.060+05:30  INFO 24692 --- [ProductService] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2638 ms
+2024-07-18T01:06:32.409+05:30  WARN 24692 --- [ProductService] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'dataSourceScriptDatabaseInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to determine a suitable driver class
+2024-07-18T01:06:32.416+05:30  INFO 24692 --- [ProductService] [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-07-18T01:06:32.447+05:30  INFO 24692 --- [ProductService] [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-07-18T01:06:32.474+05:30 ERROR 24692 --- [ProductService] [           main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+
+Process finished with exit code 1
+-----------------------------------------------------------------------------------------
+
+it is not starting because we didn't put the sql db details.
+
+go to pom.xml
+remove spring data jpa dependency 
+
+let's start the server
+
+"C:\Program Files\Java\jdk-17.0.5\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.3.3\lib\idea_rt.jar=63582:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.3.3\bin" -Dfile.encoding=UTF-8 -classpath "D:\Projects\ScalerProjects\Backend Projects\Ecom Project\ProductService\ProductService\target\classes;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.3.1\spring-boot-starter-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter\3.3.1\spring-boot-starter-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot\3.3.1\spring-boot-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.3.1\spring-boot-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.3.1\spring-boot-starter-logging-3.3.1.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-classic\1.5.6\logback-classic-1.5.6.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-core\1.5.6\logback-core-1.5.6.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.23.1\log4j-to-slf4j-2.23.1.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-api\2.23.1\log4j-api-2.23.1.jar;C:\Users\vivek\.m2\repository\org\slf4j\jul-to-slf4j\2.0.13\jul-to-slf4j-2.0.13.jar;C:\Users\vivek\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\vivek\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.3.1\spring-boot-actuator-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator\3.3.1\spring-boot-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.17.1\jackson-databind-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.17.1\jackson-annotations-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.17.1\jackson-core-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.17.1\jackson-datatype-jsr310-2.17.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-observation\1.13.1\micrometer-observation-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-commons\1.13.1\micrometer-commons-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-jakarta9\1.13.1\micrometer-jakarta9-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-core\1.13.1\micrometer-core-1.13.1.jar;C:\Users\vivek\.m2\repository\org\hdrhistogram\HdrHistogram\2.2.2\HdrHistogram-2.2.2.jar;C:\Users\vivek\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.3.1\spring-boot-starter-data-jpa-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.3.1\spring-boot-starter-aop-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-aop\6.1.10\spring-aop-6.1.10.jar;C:\Users\vivek\.m2\repository\org\aspectj\aspectjweaver\1.9.22\aspectjweaver-1.9.22.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.3.1\spring-boot-starter-jdbc-3.3.1.jar;C:\Users\vivek\.m2\repository\com\zaxxer\HikariCP\5.1.0\HikariCP-5.1.0.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-jdbc\6.1.10\spring-jdbc-6.1.10.jar;C:\Users\vivek\.m2\repository\org\hibernate\orm\hibernate-core\6.5.2.Final\hibernate-core-6.5.2.Final.jar;C:\Users\vivek\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\vivek\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\vivek\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\vivek\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\vivek\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\vivek\.m2\repository\com\fasterxml\classmate\1.7.0\classmate-1.7.0.jar;C:\Users\vivek\.m2\repository\net\bytebuddy\byte-buddy\1.14.17\byte-buddy-1.14.17.jar;C:\Users\vivek\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.5\jaxb-runtime-4.0.5.jar;C:\Users\vivek\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.5\jaxb-core-4.0.5.jar;C:\Users\vivek\.m2\repository\org\eclipse\angus\angus-activation\2.0.2\angus-activation-2.0.2.jar;C:\Users\vivek\.m2\repository\org\glassfish\jaxb\txw2\4.0.5\txw2-4.0.5.jar;C:\Users\vivek\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\vivek\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\vivek\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\vivek\.m2\repository\org\springframework\data\spring-data-jpa\3.3.1\spring-data-jpa-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\data\spring-data-commons\3.3.1\spring-data-commons-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-orm\6.1.10\spring-orm-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-context\6.1.10\spring-context-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-tx\6.1.10\spring-tx-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-beans\6.1.10\spring-beans-6.1.10.jar;C:\Users\vivek\.m2\repository\org\slf4j\slf4j-api\2.0.13\slf4j-api-2.0.13.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-aspects\6.1.10\spring-aspects-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.3.1\spring-boot-starter-web-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.3.1\spring-boot-starter-json-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.17.1\jackson-datatype-jdk8-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.17.1\jackson-module-parameter-names-2.17.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.3.1\spring-boot-starter-tomcat-3.3.1.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.25\tomcat-embed-core-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.25\tomcat-embed-el-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.25\tomcat-embed-websocket-10.1.25.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-web\6.1.10\spring-web-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-webmvc\6.1.10\spring-webmvc-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-expression\6.1.10\spring-expression-6.1.10.jar;C:\Users\vivek\.m2\repository\org\postgresql\postgresql\42.7.3\postgresql-42.7.3.jar;C:\Users\vivek\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\vivek\.m2\repository\org\projectlombok\lombok\1.18.32\lombok-1.18.32.jar;C:\Users\vivek\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.2\jakarta.xml.bind-api-4.0.2.jar;C:\Users\vivek\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.3\jakarta.activation-api-2.1.3.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-core\6.1.10\spring-core-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-jcl\6.1.10\spring-jcl-6.1.10.jar" dev.vivek.ProductService.ProductServiceApplication
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2024-07-18T15:52:44.685+05:30  INFO 32012 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : Starting ProductServiceApplication using Java 17.0.5 with PID 32012 (D:\Projects\ScalerProjects\Backend Projects\Ecom Project\ProductService\ProductService\target\classes started by vivek in D:\Projects\ScalerProjects\Backend Projects\Ecom Project\ProductService\ProductService)
+2024-07-18T15:52:44.690+05:30  INFO 32012 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-07-18T15:52:46.228+05:30  INFO 32012 --- [ProductService] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-18T15:52:46.255+05:30  INFO 32012 --- [ProductService] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 JPA repository interfaces.
+2024-07-18T15:52:47.280+05:30  INFO 32012 --- [ProductService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-18T15:52:47.299+05:30  INFO 32012 --- [ProductService] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-18T15:52:47.299+05:30  INFO 32012 --- [ProductService] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-18T15:52:47.419+05:30  INFO 32012 --- [ProductService] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-18T15:52:47.421+05:30  INFO 32012 --- [ProductService] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2653 ms
+2024-07-18T15:52:47.756+05:30  WARN 32012 --- [ProductService] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'dataSourceScriptDatabaseInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to determine a suitable driver class
+2024-07-18T15:52:47.760+05:30  INFO 32012 --- [ProductService] [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-07-18T15:52:47.798+05:30  INFO 32012 --- [ProductService] [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-07-18T15:52:47.826+05:30 ERROR 32012 --- [ProductService] [           main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+
+Process finished with exit code 1
+
+
+oh it is also asking for sql
+
+I removed my spring data jpa dependency still i am getting the same error - because we didnot reload or refresh the pom.xml file
+
+so, go to pom.xml right click maven reload project
+sql dependency(PostgreSQL) is still there but the need for that 
+i reloaded this so let's start the server 
+
+"C:\Program Files\Java\jdk-17.0.5\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.3.3\lib\idea_rt.jar=63796:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.3.3\bin" -Dfile.encoding=UTF-8 -classpath "D:\Projects\ScalerProjects\Backend Projects\Ecom Project\ProductService\ProductService\target\classes;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.3.1\spring-boot-starter-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter\3.3.1\spring-boot-starter-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot\3.3.1\spring-boot-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.3.1\spring-boot-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.3.1\spring-boot-starter-logging-3.3.1.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-classic\1.5.6\logback-classic-1.5.6.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-core\1.5.6\logback-core-1.5.6.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.23.1\log4j-to-slf4j-2.23.1.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-api\2.23.1\log4j-api-2.23.1.jar;C:\Users\vivek\.m2\repository\org\slf4j\jul-to-slf4j\2.0.13\jul-to-slf4j-2.0.13.jar;C:\Users\vivek\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\vivek\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.3.1\spring-boot-actuator-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator\3.3.1\spring-boot-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.17.1\jackson-databind-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.17.1\jackson-annotations-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.17.1\jackson-core-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.17.1\jackson-datatype-jsr310-2.17.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-observation\1.13.1\micrometer-observation-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-commons\1.13.1\micrometer-commons-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-jakarta9\1.13.1\micrometer-jakarta9-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-core\1.13.1\micrometer-core-1.13.1.jar;C:\Users\vivek\.m2\repository\org\hdrhistogram\HdrHistogram\2.2.2\HdrHistogram-2.2.2.jar;C:\Users\vivek\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.3.1\spring-boot-starter-web-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.3.1\spring-boot-starter-json-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.17.1\jackson-datatype-jdk8-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.17.1\jackson-module-parameter-names-2.17.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.3.1\spring-boot-starter-tomcat-3.3.1.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.25\tomcat-embed-core-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.25\tomcat-embed-el-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.25\tomcat-embed-websocket-10.1.25.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-web\6.1.10\spring-web-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-beans\6.1.10\spring-beans-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-webmvc\6.1.10\spring-webmvc-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-aop\6.1.10\spring-aop-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-context\6.1.10\spring-context-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-expression\6.1.10\spring-expression-6.1.10.jar;C:\Users\vivek\.m2\repository\org\postgresql\postgresql\42.7.3\postgresql-42.7.3.jar;C:\Users\vivek\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\vivek\.m2\repository\org\projectlombok\lombok\1.18.32\lombok-1.18.32.jar;C:\Users\vivek\.m2\repository\org\slf4j\slf4j-api\2.0.13\slf4j-api-2.0.13.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-core\6.1.10\spring-core-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-jcl\6.1.10\spring-jcl-6.1.10.jar" dev.vivek.ProductService.ProductServiceApplication
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2024-07-18T16:00:23.053+05:30  INFO 12568 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : Starting ProductServiceApplication using Java 17.0.5 with PID 12568 (D:\Projects\ScalerProjects\Backend Projects\Ecom Project\ProductService\ProductService\target\classes started by vivek in D:\Projects\ScalerProjects\Backend Projects\Ecom Project\ProductService\ProductService)
+2024-07-18T16:00:23.060+05:30  INFO 12568 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-07-18T16:00:24.791+05:30  INFO 12568 --- [ProductService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-18T16:00:24.806+05:30  INFO 12568 --- [ProductService] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-18T16:00:24.806+05:30  INFO 12568 --- [ProductService] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-18T16:00:24.904+05:30  INFO 12568 --- [ProductService] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-18T16:00:24.906+05:30  INFO 12568 --- [ProductService] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1771 ms
+2024-07-18T16:00:25.739+05:30  INFO 12568 --- [ProductService] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-07-18T16:00:25.837+05:30  INFO 12568 --- [ProductService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-07-18T16:00:25.857+05:30  INFO 12568 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : Started ProductServiceApplication in 3.298 seconds (process running for 3.776)
+
+because i didnot add any database details it sort of failed
+The dependency that i removed was spring data jpa
+
+when i add spring data jpa dependency
+<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+And start the application
+
+you see that :
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+so whenever you use spring-boot-starter-data-jpa it by default looks for a datasource, looks for a db, looks for a sql or any kind of database. it will try to hit database without url. it will try to connect to the database, it will try to make a connection with the database whenever we will start the server. whenever you will start the application it will try to connect with the database but have we given any properties for the database in application.properties file under resources package
+
+spring.application.name=ProductService
+
+
+so that is why it is saying that hey
+Failed to configure a DataSource: because it is trying to connect with some datasource but have not given any datasource
+
+now go to pom and delete or commented spring data jpa dependency and reload the pom because whenever we changes pom.xml we need to reload the pom
+
+start the application and it will  run
+"C:\Program Files\Java\jdk-17.0.5\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.3.3\lib\idea_rt.jar=64255:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.3.3\bin" -Dfile.encoding=UTF-8 -classpath "D:\Projects\ScalerProjects\Backend Projects\Ecom Project\ProductService\ProductService\target\classes;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.3.1\spring-boot-starter-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter\3.3.1\spring-boot-starter-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot\3.3.1\spring-boot-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.3.1\spring-boot-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.3.1\spring-boot-starter-logging-3.3.1.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-classic\1.5.6\logback-classic-1.5.6.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-core\1.5.6\logback-core-1.5.6.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.23.1\log4j-to-slf4j-2.23.1.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-api\2.23.1\log4j-api-2.23.1.jar;C:\Users\vivek\.m2\repository\org\slf4j\jul-to-slf4j\2.0.13\jul-to-slf4j-2.0.13.jar;C:\Users\vivek\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\vivek\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.3.1\spring-boot-actuator-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator\3.3.1\spring-boot-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.17.1\jackson-databind-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.17.1\jackson-annotations-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.17.1\jackson-core-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.17.1\jackson-datatype-jsr310-2.17.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-observation\1.13.1\micrometer-observation-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-commons\1.13.1\micrometer-commons-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-jakarta9\1.13.1\micrometer-jakarta9-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-core\1.13.1\micrometer-core-1.13.1.jar;C:\Users\vivek\.m2\repository\org\hdrhistogram\HdrHistogram\2.2.2\HdrHistogram-2.2.2.jar;C:\Users\vivek\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.3.1\spring-boot-starter-web-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.3.1\spring-boot-starter-json-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.17.1\jackson-datatype-jdk8-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.17.1\jackson-module-parameter-names-2.17.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.3.1\spring-boot-starter-tomcat-3.3.1.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.25\tomcat-embed-core-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.25\tomcat-embed-el-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.25\tomcat-embed-websocket-10.1.25.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-web\6.1.10\spring-web-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-beans\6.1.10\spring-beans-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-webmvc\6.1.10\spring-webmvc-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-aop\6.1.10\spring-aop-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-context\6.1.10\spring-context-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-expression\6.1.10\spring-expression-6.1.10.jar;C:\Users\vivek\.m2\repository\org\postgresql\postgresql\42.7.3\postgresql-42.7.3.jar;C:\Users\vivek\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\vivek\.m2\repository\org\projectlombok\lombok\1.18.32\lombok-1.18.32.jar;C:\Users\vivek\.m2\repository\org\slf4j\slf4j-api\2.0.13\slf4j-api-2.0.13.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-core\6.1.10\spring-core-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-jcl\6.1.10\spring-jcl-6.1.10.jar" dev.vivek.ProductService.ProductServiceApplication
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2024-07-18T16:36:27.846+05:30  INFO 19060 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : Starting ProductServiceApplication using Java 17.0.5 with PID 19060 (D:\Projects\ScalerProjects\Backend Projects\Ecom Project\ProductService\ProductService\target\classes started by vivek in D:\Projects\ScalerProjects\Backend Projects\Ecom Project\ProductService\ProductService)
+2024-07-18T16:36:27.850+05:30  INFO 19060 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-07-18T16:36:29.426+05:30  INFO 19060 --- [ProductService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-18T16:36:29.439+05:30  INFO 19060 --- [ProductService] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-18T16:36:29.440+05:30  INFO 19060 --- [ProductService] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-18T16:36:29.514+05:30  INFO 19060 --- [ProductService] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-18T16:36:29.517+05:30  INFO 19060 --- [ProductService] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1574 ms
+2024-07-18T16:36:30.374+05:30  INFO 19060 --- [ProductService] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-07-18T16:36:30.465+05:30  INFO 19060 --- [ProductService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-07-18T16:36:30.480+05:30  INFO 19060 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : Started ProductServiceApplication in 3.104 seconds (process running for 3.55)
+
+
+So, we removed the need to connect to the db.
+
+This postgres dependency is not for connection to the database. This is for jpa to understand what to use, what kind of query to generate because even though sql is more or less same but still MySQL can have a separate query, separate keyword, postgres might have separate, oracle might have separate. so this is basically for jpa to understand what kind of query to generate not to connect. the actual one is spring-boot-starter-data-jpa. so i removed that and hence i don't need to connect to the database anymore. 
+
+<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+we can only add spring data jpa dependency and hibernate is part of jpa. specifically we cannot add hibernate dependency
+
+now our application started
+we have 2 controllers
+/hello - get call 
+/hi - @delete
+
+@GetMapping("/hello")
+    public ResponseEntity hello() {
+        return ResponseEntity.ok("Hello");
+    }
+
+    @DeleteMapping("/hi")
+    public ResponseEntity hi() {
+        return ResponseEntity.ok("Hi");
+    }
+
+open postman
+get call - http://localhost:8080/hello  hit this api.
+output -  Hello
+get call - http://localhost:8080/hi  hit this api.
+output - {
+    "timestamp": "2024-07-18T11:30:53.859+00:00",
+    "status": 405,
+    "error": "Method Not Allowed",
+    "path": "/hi"
+}
+
+we create hi method but we get Method Not Allowed because hi method was delete mapping
+
+delete call - http://localhost:8080/hi
+output - Hi
+
+open IntelliJ and i am putting some debugger points here
+@GetMapping("/hello")
+    public ResponseEntity hello() {
+(debugger point)        return ResponseEntity.ok("Hello");
+    }
+
+    @DeleteMapping("/hi")
+    public ResponseEntity hi() {
+(debugger point)        return ResponseEntity.ok("Hi");
+    }
+
+now go to postman and hit the api
+The moment i hit the api the comes at line no 18 (debugger point)        return ResponseEntity.ok("Hi");
+
+It is a very interesting thing that when you send a request
+from postman get call - /hi how does it actually like how does spring actually map that api call to this particular hi() method or lets say if i do a hello
+in postman
+get call - http://localhost:8080/hello
+
+@GetMapping("/hello")
+    public ResponseEntity hello() {
+(debugger point)        return ResponseEntity.ok("Hello");
+    }
+
+how does spring does that ? 
+Again you see hello comes in.
+
+There is some mechanism which basically maps your method, your url (get - hello, get - hi, delete - hi url) comes in.
+before i go into that - i will use actuator
+
+go to application.properties 
+put management.endpoints.web.exposure.include=mappings
+(This helps us to see all the possible url's that we have in our code. This helps to expose(you can see exposure) all the mappings, all the url mappings that we have in our code)
+
+what will happen you will see. The moment i restart the application.
+ 
+Now i will hit one api called 
+
+http://localhost:8080/actuator/mappings
+because i want to see the mappings using actuator. This is an internal api which spring boot actuator is giving us. That's why we use actuator dependency in pom.xml. 
+so this facility the api that i am going to hit right now we have not build this api, we have not done anything for this api, we are just marked it as true. it's a predefined api. i am going to hit this api and see what response we get
+
+ get call - http://localhost:8080/actuator/mappings
+
+output - 
+{
+    "contexts": {
+        "ProductService": {
+            "mappings": {
+                "dispatcherServlets": {
+                    "dispatcherServlet": [
+                        {
+                            "handler": "Actuator root web endpoint",
+                            "predicate": "{GET [/actuator], produces [application/vnd.spring-boot.actuator.v3+json || application/vnd.spring-boot.actuator.v2+json || application/json]}",
+                            "details": {
+                                "handlerMethod": {
+                                    "className": "org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.WebMvcLinksHandler",
+                                    "name": "links",
+                                    "descriptor": "(Ljakarta/servlet/http/HttpServletRequest;Ljakarta/servlet/http/HttpServletResponse;)Ljava/util/Map;"
+                                },
+                                "requestMappingConditions": {
+                                    "consumes": [],
+                                    "headers": [],
+                                    "methods": [
+                                        "GET"
+                                    ],
+                                    "params": [],
+                                    "patterns": [
+                                        "/actuator"
+                                    ],
+                                    "produces": [
+                                        {
+                                            "mediaType": "application/vnd.spring-boot.actuator.v3+json",
+                                            "negated": false
+                                        },
+                                        {
+                                            "mediaType": "application/vnd.spring-boot.actuator.v2+json",
+                                            "negated": false
+                                        },
+                                        {
+                                            "mediaType": "application/json",
+                                            "negated": false
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "handler": "Actuator web endpoint 'mappings'",
+                            "predicate": "{GET [/actuator/mappings], produces [application/vnd.spring-boot.actuator.v3+json || application/vnd.spring-boot.actuator.v2+json || application/json]}",
+                            "details": {
+                                "handlerMethod": {
+                                    "className": "org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping.OperationHandler",
+                                    "name": "handle",
+                                    "descriptor": "(Ljakarta/servlet/http/HttpServletRequest;Ljava/util/Map;)Ljava/lang/Object;"
+                                },
+                                "requestMappingConditions": {
+                                    "consumes": [],
+                                    "headers": [],
+                                    "methods": [
+                                        "GET"
+                                    ],
+                                    "params": [],
+                                    "patterns": [
+                                        "/actuator/mappings"
+                                    ],
+                                    "produces": [
+                                        {
+                                            "mediaType": "application/vnd.spring-boot.actuator.v3+json",
+                                            "negated": false
+                                        },
+                                        {
+                                            "mediaType": "application/vnd.spring-boot.actuator.v2+json",
+                                            "negated": false
+                                        },
+                                        {
+                                            "mediaType": "application/json",
+                                            "negated": false
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "handler": "org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#errorHtml(HttpServletRequest, HttpServletResponse)",
+                            "predicate": "{ [/error], produces [text/html]}",
+                            "details": {
+                                "handlerMethod": {
+                                    "className": "org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController",
+                                    "name": "errorHtml",
+                                    "descriptor": "(Ljakarta/servlet/http/HttpServletRequest;Ljakarta/servlet/http/HttpServletResponse;)Lorg/springframework/web/servlet/ModelAndView;"
+                                },
+                                "requestMappingConditions": {
+                                    "consumes": [],
+                                    "headers": [],
+                                    "methods": [],
+                                    "params": [],
+                                    "patterns": [
+                                        "/error"
+                                    ],
+                                    "produces": [
+                                        {
+                                            "mediaType": "text/html",
+                                            "negated": false
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "handler": "org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)",
+                            "predicate": "{ [/error]}",
+                            "details": {
+                                "handlerMethod": {
+                                    "className": "org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController",
+                                    "name": "error",
+                                    "descriptor": "(Ljakarta/servlet/http/HttpServletRequest;)Lorg/springframework/http/ResponseEntity;"
+                                },
+                                "requestMappingConditions": {
+                                    "consumes": [],
+                                    "headers": [],
+                                    "methods": [],
+                                    "params": [],
+                                    "patterns": [
+                                        "/error"
+                                    ],
+                                    "produces": []
+                                }
+                            }
+                        },
+                        {
+                            "handler": "dev.vivek.ProductService.controller.DemoController#hello()",
+                            "predicate": "{GET [/hello]}",
+                            "details": {
+                                "handlerMethod": {
+                                    "className": "dev.vivek.ProductService.controller.DemoController",
+                                    "name": "hello",
+                                    "descriptor": "()Lorg/springframework/http/ResponseEntity;"
+                                },
+                                "requestMappingConditions": {
+                                    "consumes": [],
+                                    "headers": [],
+                                    "methods": [
+                                        "GET"
+                                    ],
+                                    "params": [],
+                                    "patterns": [
+                                        "/hello"
+                                    ],
+                                    "produces": []
+                                }
+                            }
+                        },
+                        {
+                            "handler": "dev.vivek.ProductService.controller.DemoController#hi()",
+                            "predicate": "{DELETE [/hi]}",
+                            "details": {
+                                "handlerMethod": {
+                                    "className": "dev.vivek.ProductService.controller.DemoController",
+                                    "name": "hi",
+                                    "descriptor": "()Lorg/springframework/http/ResponseEntity;"
+                                },
+                                "requestMappingConditions": {
+                                    "consumes": [],
+                                    "headers": [],
+                                    "methods": [
+                                        "DELETE"
+                                    ],
+                                    "params": [],
+                                    "patterns": [
+                                        "/hi"
+                                    ],
+                                    "produces": []
+                                }
+                            }
+                        },
+                        {
+                            "handler": "ResourceHttpRequestHandler [classpath [META-INF/resources/webjars/]]",
+                            "predicate": "/webjars/**"
+                        },
+                        {
+                            "handler": "ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]",
+                            "predicate": "/**"
+                        }
+                    ]
+                },
+                "servletFilters": [
+                    {
+                        "urlPatternMappings": [
+                            "/*"
+                        ],
+                        "servletNameMappings": [],
+                        "name": "requestContextFilter",
+                        "className": "org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter"
+                    },
+                    {
+                        "urlPatternMappings": [
+                            "/*"
+                        ],
+                        "servletNameMappings": [],
+                        "name": "webMvcObservationFilter",
+                        "className": "org.springframework.web.filter.ServerHttpObservationFilter"
+                    },
+                    {
+                        "urlPatternMappings": [
+                            "/*"
+                        ],
+                        "servletNameMappings": [],
+                        "name": "Tomcat WebSocket (JSR356) Filter",
+                        "className": "org.apache.tomcat.websocket.server.WsFilter"
+                    },
+                    {
+                        "urlPatternMappings": [
+                            "/*"
+                        ],
+                        "servletNameMappings": [],
+                        "name": "characterEncodingFilter",
+                        "className": "org.springframework.boot.web.servlet.filter.OrderedCharacterEncodingFilter"
+                    },
+                    {
+                        "urlPatternMappings": [
+                            "/*"
+                        ],
+                        "servletNameMappings": [],
+                        "name": "formContentFilter",
+                        "className": "org.springframework.boot.web.servlet.filter.OrderedFormContentFilter"
+                    }
+                ],
+                "servlets": [
+                    {
+                        "mappings": [
+                            "/"
+                        ],
+                        "name": "dispatcherServlet",
+                        "className": "org.springframework.web.servlet.DispatcherServlet"
+                    }
+                ]
+            }
+        }
+    }
+}
+
+
+so this vscode text editor contains all the urls's that your application right now supports. it shows all the urls's that your application supports either you created or you did not create, all the api's and who would be handling those api's ? 
+
+so if you see the first api that i called was actuator mapping 
+
+GET [/actuator/mappings]
+ 
+because to get this entire data. 
+
+{
+                            "handler": "Actuator web endpoint 'mappings'",
+                            "predicate": "{GET [/actuator/mappings], produces [application/vnd.spring-boot.actuator.v3+json || application/vnd.spring-boot.actuator.v2+json || application/json]}",
+                            "details": {
+                                "handlerMethod": {
+                                    "className": "org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping.OperationHandler",
+                                    "name": "handle",
+                                    "descriptor": "(Ljakarta/servlet/http/HttpServletRequest;Ljava/util/Map;)Ljava/lang/Object;"
+                                },
+                                "requestMappingConditions": {
+                                    "consumes": [],
+                                    "headers": [],
+                                    "methods": [
+                                        "GET"
+                                    ],
+                                    "params": [],
+                                    "patterns": [
+                                        "/actuator/mappings"
+                                    ],
+                                    "produces": [
+                                        {
+                                            "mediaType": "application/vnd.spring-boot.actuator.v3+json",
+                                            "negated": false
+                                        },
+                                        {
+                                            "mediaType": "application/vnd.spring-boot.actuator.v2+json",
+                                            "negated": false
+                                        },
+                                        {
+                                            "mediaType": "application/json",
+                                            "negated": false
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+
+
+now you can see the handler method 
+"handlerMethod": {
+                                    "className": "org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping.OperationHandler",
+
+now these are the internal api's let's not worry about them too much.
+
+do you see this ?
+we have created an api called 
+delete - /hi and who would be handling this delete - /hi. it will be handled by 
+"handler": "dev.vivek.ProductService.controller.DemoController#hi()",
+
+class name is DemoController
+"className": "dev.vivek.ProductService.controller.DemoController"
+
+name of the method is "hi"
+"name": "hi",
+                             
+the descriptor that means it will return a ResponseEntity
+"descriptor": "()Lorg/springframework/http/ResponseEntity;"
+
+do you see this handler method
+"handlerMethod": {
+                                    "className": "dev.vivek.ProductService.controller.DemoController",
+                                    "name": "hi",
+                                    "descriptor": "()Lorg/springframework/http/ResponseEntity;"
+                                },
+
+so whatever url or api that we are creating inside the controller that means in the back spring is creating some sort of a data where it creates the list or obj of all the url's or api's that you create and all the handler methods of that api. 
+
+do you see spring has created an entry for your particular handler : "dev.vivek.ProductService.controller.DemoController#hi()", of "{DELETE [/hi]}"
+
+"handler": "dev.vivek.ProductService.controller.DemoController#hi()",
+                            "predicate": "{DELETE [/hi]}",
+
+
+
+{
+                            "handler": "dev.vivek.ProductService.controller.DemoController#hi()",
+                            "predicate": "{DELETE [/hi]}",
+                            "details": {
+                                "handlerMethod": {
+                                    "className": "dev.vivek.ProductService.controller.DemoController",
+                                    "name": "hi",
+                                    "descriptor": "()Lorg/springframework/http/ResponseEntity;"
+                                },
+                                "requestMappingConditions": {
+                                    "consumes": [],
+                                    "headers": [],
+                                    "methods": [
+                                        "DELETE"
+                                    ],
+                                    "params": [],
+                                    "patterns": [
+                                        "/hi"
+                                    ],
+                                    "produces": []
+                                }
+                            }
+                        }
+
+
+
+
+This is called a mapping. this means that map your url(your api) to a particular method. this is called mapping. that i have created a data where i have mapped, the key is the url(/hi, /hello, /whatever) and the method which is going to handle that particular url. so delete - /hi will be handled by DemoController class hi() method. so this is called a mapping. so springboot creates a list of all the mappings.
+
+what's predicate?
+predicate means the url of which type and what is url on which we are going to make the call. for ex - "predicate": "{DELETE [/hi]}",
+
+handler is the method which is going to handle it 
+"handler": "dev.vivek.ProductService.controller.DemoController#hi()",
+
+
+we will cover these things in next 1 or 2 classes :
+consumes, headers and all because we have to go in-depth about api like 
+
+what is an api?
+what is header?
+what is consumption?
+what is production?
+
+like you see consumes, produces, headers, params
+
+"requestMappingConditions": {
+                                    "consumes": [],
+                                    "headers": [],
+                                    "methods": [
+                                        "DELETE"
+                                    ],
+                                    "params": [],
+                                    "patterns": [
+                                        "/hi"
+                                    ],
+                                    "produces": []
+                                }
+
+
+similarly for hello
+---------------------
+{
+                            "handler": "dev.vivek.ProductService.controller.DemoController#hello()",
+                            "predicate": "{GET [/hello]}",
+                            "details": {
+                                "handlerMethod": {
+                                    "className": "dev.vivek.ProductService.controller.DemoController",
+                                    "name": "hello",
+                                    "descriptor": "()Lorg/springframework/http/ResponseEntity;"
+                                },
+                                "requestMappingConditions": {
+                                    "consumes": [],
+                                    "headers": [],
+                                    "methods": [
+                                        "GET"
+                                    ],
+                                    "params": [],
+                                    "patterns": [
+                                        "/hello"
+                                    ],
+                                    "produces": []
+                                }
+                            }
+                        }
+
+
+ashish doubt - So basically it tells which method is mapped to api url
+exactly that means spring itself keeps a list of all the method names and their respective url's. so for every api url what method needs to be invoked spring keeps a copy of that. 
+
+actuator is helping us to see this data. actuator is not actually creating this data.
+actuator is not creating the mappings. actuator is just helping us to see this data.
+else it will remain hidden. the actual creation of mappings is done by spring only.
+
+hrishikesh doubt - actuator shows all api mapping created by spring ?
+my ans - no
+
+Ashish Kumar
+To: Everyone
+9:30 PM
+It means anyone can see all the mapping from browser.
+ans - no, you can filter the url's. you can not give the actuator and all that. obviously i will always hide this url and i'll not allow them to see. you can hide it.
+
+ Sarvesh Rohira
+To: Everyone
+9:31 PM
+adding this in application.properties is required? Is it not already present in spring?
+ans - yes you need to add it in application.properties. you are enabling to see the data. In application.properties
+management.endpoints.web.exposure.include=mappings
+
+See all Mappings using Actuator
+http://localhost:8080/actuator/mappings
+
+Gowtham
+To: Everyone
+9:32 PM
+there are other inbuilt URL's also ?
+yes
+
+Akash Kumar
+To: Everyone
+9:32 PM
+is this one of the main usage of actuators?
+yes this is one of the usage of actuators not main
+
+
+flow of how requests are handled in spring -
+------------------------------------
+
+spring stores a mapping of all the endpoints and their respective methods
+
+Vanapalli Tarun
+To: Everyone
+9:33 PM
+what are endpoints?
+/hi and /hello 
+
+@GetMapping("/hi")
+
+localhost:8080/hi
+______________ ___  
+domain name    endpoints
+
+www.amazon.in/prime -> endpoints/API url
+www.google.com/maps
+______________ ___  
+domain name    endpoints
+
+for every endpoint API url that you have spring creates  mapping hey
+
+GET / hi (/hi - a get call) 
+will be handled by 
+DemoController ka hi() (DemoController# hi())
+
+Gowtham
+To: Everyone
+9:35 PM
+https://www.scaler.com/academy/mentee-dashboard/class/197900/session https://www.scaler.com/academy/mentee-dashboard/class/198008/session
+9:35 PM
+15
+9:35 PM
+2
+Gowtham
+To: Everyone
+9:35 PM
+Are two different endpoints
+no 
+                                                      variable or @PathVariable
+                                                      __________
+https://www.scaler.com/academy/mentee-dashboard/class/{sessionId}/session
+______________________ ______________________________________________
+domain name                              endpoint
+
+so anything after domain is endpoint or api url?
+yes
+
+Springboot maintain mapping of all endpoints & their respective methods
+
+
+How it maintains the mappings and where it stores?
+--------------------------------------------------
+
+whenever you make a request there are 2-3 things come into the picture
+
+1. Filter
+2. Dispatcher Servlet
+   Handler Mapping
+
+3. Interceptor
+4. Controller
+
+at the very beginning of your code like first thing that the request that comes talks to is called the filter
+
+image : 
+
+                                                           Spring MVC                                          
+                        ________________________________________________________________________
+                       [                                                                       |
+	Filters        |                            Handler Interceptors                                           |
+         ___ ___       |                                  ___ ___                              |
+         | | | |       |   _____________________          | | | |                              |
+Request  | | | |       |   [                   ] Request  | | | |               ___________    |
+-------> | | | | ------->  |                   | -------> | | | | ------->     (           )   |
+         | | | |       |   | DispatcherServlet |          | | | | Response     [ controller}   |
+<------- | | | | <-------  |                   | <------- | | | | <-------     (___________}   |
+Response | | | |       |   [___________________]          | | | |                              |
+         | | | |       |                                  |_| |_|                              |
+         |_| |_|       |                                                                       |
+                       [_______________________________________________________________________]
+
+					this is	Spring container 						
+
+so at the very beginning even before entering your container
+filter comes outside. filter is a very first like it's a gate think of it like a gateway.
+
+Filter - in filter we do all the authentication and authorization checks, if you want to add logs you can do logging as well, if you want to monitor the latency you can use that as well. 
+
+so any request that comes /hi, /hello, /actuator/mappings whatever request comes to springboot, whatever api you hit on springboot the very first piece of code, the very first piece of execution logic that talks to that particular request are your filter classes. There are lot of filters which are present in code they are the first part which is basically handling the request.
+
+In spring security we will discuss a lot about filters because spring security  is built using these filters. using filters we do authentication and authorization checks in spring security. whatever spring security code you will write will present in this layer.
+
+what is filter ? - 
+the very first piece of code or spring related code that talks to your request is filter. it helps us with authentication, authorization, logging the requests, latency checks for ex - time delay by request and response 
+
+
+After that 
+
+DispatcherServlet - DispatcherServlet is responsible for routing your requests to that particular class or to that particular method.
+Inside the DispatcherServlet there is something called as Handler Mapping
+
+Handler Mapping - this is the class that stores all the mappings.
+
+
+the request comes to dispatcher servlet let's imagine /hello the request pass to the filters and then it will come to the dispatcher servlet.
+inside dispatcher servlet, dispatcher servlet will ask to handler mapping hey what is the method name for /hello then handler mapping say hey inside DemoController there is method called hello(). Then dispatcher servlet will say ok fine i will then pass this data to DemoController.hello()
+
+key - url
+value - method name()
+
+handler mapping gives the method name and dispatcher servlet then passes it forward and saying that this particular request   will be handled by this particular piece of code.
+
+
+INterceptor - It handles cross cutting concerns. 
+
+	      In splitwise we are doing some sort of billing(like settle up), now whenever you will send the settle up ka call you remember  in groups in expenses, people could add multiple currencies. like we are on a trip india to London . so something was spent in us dollar, some money was spent in pound, some money was spent in INR. 
+Now whenever i will do the settle up, i will need to first make sure that every expense in a single currency and then i can calculate the total (base currency). then i can calculate the outstanding and all that. 
+now let's say you have 3-4 currencies involved. so whenever you want to try to convert that data, so you will have to call some 3rd party api which will basically give you the data saying that hey this is the usd to inr currency rate. you will have to call some 3rd party/ some exchange service were you will get the data. 
+
+So but imagine instead controller handling that you tell me one thing is it something that the controller should be worried about like calling 3rd party and getting the data or service layer should be worried about ? no
+
+what if when the call was going to controller let's imagine what if i could write code in such a cool way that when the call was reaching the controller before it could reach the controller i would automatically send the data like usd to inr, usd to pound, pound to inr, all these data i can prefill before even it reaches the controller. Then controller will always have the data, service layer will always have the conversion rate and you will not need to call any 3rd party services to handle that.
+
+Interceptor does that. so it handles things which are called as cross cutting concerns.
+
+what do you mean by cross cutting concerns ?
+a lot of times what happens, when we build bigger applications a lot of your api's will depend on some important data.
+for ex - let's say i have 4-5 api's that says that ok. there is user, imagine something like performance tracker
+
+    {userId}
+    ____
+/pr/{id} - give me the pr raised by that particular user
+/jobcomplete/{id} - give me the job completed by that particular user
+/attendance/{id} - give me the attendance of that particular user
+/overallRating/{id} - give me the overallRating for that particular user
+/mentoring/{id} - give me how many people the user has mentored
+
+all these are different different api's. now whenever you will hit any of these api's don't you think you will have to fetch the database get the user object, get the data from that particular user object and give it back to the UI. 
+
+so everywhere in code you will have to write a query for SELECT * FROM User.
+In all of these api's you will have query the user data   
+    
+/pr/{id} - SELECT * FROM User
+           WHERE id = ?
+/jobcomplete/{id} - SELECT * FROM User
+/attendance/{id} - SELECT * FROM User
+/overallRating/{id} - SELECT * FROM User
+/mentoring/{id} - SELECT * FROM User
+
+first of all don't you think this is duplicasy of work
+
+User Table
+________________________________________
+id |PR |job |attendance |Rating | Mentor|
+___|___|____|___________|_______|_______|
+   |   |    |           |       |       |
+
+
+summary - In all these api's down the line what you will do in he service layer you will do 
+SELECT * FROM User
+WHERE id = ?
+you will pull the user object from the database, you will take that data that you need pr count in 1st api, job complete in 2nd api, etc. you will pull out those individual attributes and you will return that back to the response.
+
+now since you already know that all of these 5 api's are going to call the database to fetch the user object don't you think this is something known as cross-cutting concerns that means this is not an individual effort, everybody is doing the same thing, everybody all the 5 api's need the user object. It's not a single api responsibility or specific to a single api. All the 5 api's need the user object to be responded with. These are called cross cutting concerns. the concerns which are not specific to you.
+
+so, this is where interceptor coming into the picture what you can do you can write one interceptor and you can say that hey whenever the request comes add the required data to the request even before it reaches the controller. 
+
+Before the request reaches the controller i will inject the user object inside it. so I will create a class called interceptor, this is something that you will create (created by dev)   
+so you will create a class called interceptor, you will put annotation @Interceptor and this interceptor will handle like every api even before it reaches the controller, it will first go to the interceptor. As the name suggests intercept (intercept in between). so even before your call reaches the controller, the request will be intercepted and the interceptor will query your repository (this can directly talk to repository) and fetch the user object, inject that user object inside the request and then pass it on to the controller and then further service layer.
+
+Now, if my request already contains the user object let's say at a controller layer or at the service layer if your request already contains the user object do you need to write the query, do you need to execute the query anymore ? no
+so basically what it does is that whatever your common tasks are, things which you are going to do down the line (5 of the api's will do it down the line) interceptor will handle it even before it reaches the controller.
+
+interceptor are behaving like a service layer because it can diretly talk to the repository or db
+
+vinay doubt -  Inject in sense? as a @Requestbody User user?
+correct vinay
+
+slowing down the request and this will not increase the speed of the request.
+Ans - it might be not impacting the performance but it will make the code lesser and better , more cleaner code 
+
+doubt - so its just design thing rather than performance ?
+no it is one of the use case. there are multiple use case of interceptor. In some cases interceptor can also help you to reduce the latency and increase the performance as well.
+
+Nithin Korukonda
+To: Everyone
+9:58 PM
+the last part i didnot get sir because how any we need to hit 5 time to gt the object?
+no nitin we are not writing the code 5 times do you need to write code at 5 different service layers instead we only write the code only once at interceptor.
+
+
+for ex - cache in interceptor 
+inside my interceptor can i create a temporary storage 
+
+give me the pr for user no 1 
+---------> /pr/1    -------> controller --------> service
+interceptor
+tempstorage
+    |
+    v  [call the db get USER 1 OBJECT and store in my tempstorage and then pass the data to controller and then controller to service and response will go back]
+    DB
+
+now at second time person calls for give me attendance for user id 1
+
+give me the attendance for user no 1 
+---------> /attendance/1    -------> controller --------> service
+interceptor
+tempstorage [before i query the db i will check my tempstorage do i have user 1 object yes i have user 1 object so i will not need to wuery the database i can just return it directly now tell me by doing this by introducing the tempstorage like a cache interceptor will help me to increase my performance as well, make it faster as well]
+    |
+    v  [User 1]
+    DB
+
+Interceptor sits before the controller, so whatever your cross cutting concerns are they can be pulled over at a interceptor level.
+
+Ashish Yadav
+To: Everyone
+10:01 PM
+what if things are updated in backend? then user object will not be updated right?
+
+
+Ashish Kumar
+To: Everyone
+10:01 PM
+when many urls depends on same kind of data then it comes under cross cutting concerns.
+yes only this is not cross cutting concerns
+
+overall flow of request
+____________________________
+
+When you start your springboot project or application, when you click on the run or debug button
+1. Spring scans all the code and url then creates the handler mappings. Spring creates all the mappings and stores into the class called Handler Mapping (which is inside the dispatcher servlet)
+2. whenever a request comes, first it will talk to filter (filter is use for authentication, authorization, logging, performance checks, etc) 
+3. After filter it will go to dispatcher servlet and dispatcher servlet talks internally to handler mapping. dispatcher servlet asks handler mapping where will the request  /url go.
+4. After dispatcher servlet it will talk to interceptor (interceptor is used to resolving cross cutting concerns)
+5. then finally your request will hit to controller.
+
+
+all of this flow can be seen in the logs when app starts?
+yes
+
+ca we have duplicate endpoints?
+no it will fails. hashmap doesnot have duplicate keys
+
+so filter is my entry point and the method handling my request is my end point?
+
+how dispatcher build these mappings?
+documentation
+
+can you give another ex for cross cutting con
+authorization is one of the example. for ex - user might have lot of permissions. filter is check for authentication (whether you are verified user or not) but let's say you are admin or you are superadmin or you are a user you might have separate separate things you can access for ex - if take bookmyshow as an example superadmin can access movies, theatres , seats, everything. so all the properties will checked for that particular user but a normal admin can only check for a tickets and user details not movies so few boxes are checked for normal user one or two boxes will be checked. whenever i load a particular user inside my interceptor i can fetch the admn privileges of that user what is the authorization privileges of that user and then i can pass the user object inside my controller so that the controller can figure out and validated whether the user should going forward or not.
+
+Ashish Yadav
+To: Everyone
+10:08 PM
+as we have done Bcyrpt part in controller in splitwise, we can do this thing in filter ?
+no ashish
+
+Vanapalli Tarun
+To: Everyone
+10:08 PM
+It seems like filter and Interceptor do the same thing(authentication and logging). So what is the key difference?
+no, filter part will only tell whether the call can go inside or not logging everybody will do but why specially mention at fliter layer because that can tell you when a user particularly entered your code.
+Interceptor sits before controller solves cross cutting concerns because you write your own code inside interceptor and you know what are the common things which i need inside my code and i can write inside my interceptor so that there is no duplication of work.
+filter does not care about your code filter onlycares about do i allow this person to go inside my code or not. filter will only say yes or no
+
+Manu S.R.
+To: Everyone
+10:09 PM
+what is contexts?
+discuss later spring contexts 
+
+
+when exactly the handler mapping is build ?
+when hit the api, when i start the application or when is it build
+when this handler mapping class loaded with the data 
+
+
+how the handler mapping is build ?
+
+how do you write the interceptor code ?
+
+if (moving fast){
+Printf(Memory limit exceed);}
+else{
+Printf(huge bouncer)}
+break ;
+
+
+
+very imp topic
+__________________
+
+what does this Annotation @SpringBootApplication do ? 
+________________________________
+
+There are 3 Annotation inside @SpringBootApplication 
+
+1. @Configuration
+2. @ComponentScan
+3. @EnableAutoConfiguration
+
+this will also ans the que - what is the difference beteen spring, spring mvc and springboot 
+
+difference beteen spring, spring mvc and springboot 
+----------------------------------------------------
+
+Spring - spring is the base of entire framework. In spring there is dependency management, ioc container, inversion of control, dependency injection
+
+ Spring mvc - ioc + dependency injection + In spring mvc dispatcher servlet and handler mapping
+
+Spring boot - autoconfiguration everything automatic. actuator, Automatic sql query is done by jpa
+
+what is ioc container or spring context ?
+------------------------------------------
+
+In jvm there is special space called ioc container, this container maintains object of all important beans class.
+
+@component
+@service
+@repository
+@configuration
+@controller
+@RestController
+
+when you put this annotation on class then spring creates an object of that class and stores it inside the ioc container. 
+
+inside @SpringBootApplication
+1. @Configuration - it means that creates the object of the main class and stores in ioc container
+2. @ComponentScan - scans all the classes for all components (@component, @service, @repository, @configuration, @controller, @RestController, etc)
+spring created object using default constructor or ?
+yes default constructor
+3. @EnableAutoConfiguration - sets up your entire spring backend (setting up your ioc container, DI, dispatcher servlet inside this CREATION OF [handler mapping]) 
+
+
+can we increase or decrease container memory?
+yes
+
+
+Annotations are introduced in springboot But ioc container is the part of spring then in spring what ioc container does ?
+annotations are introduced in spring mvc and lot of new annotations are introduced in spring boot. annotations are shortcut way of doing something but in spring we need to write web.xml file for component scan
+
+
+bean" is just the object that is created in the ioc container during configuration process?
+
+sandeep where can we implement the logic for encryption & decryption
+service layer
