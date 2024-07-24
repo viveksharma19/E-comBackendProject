@@ -1,0 +1,1953 @@
+
+Backend Projects Calling 3rd Party APIs
+________________________________________
+
+
+For non-tech people and people who are not working
+- Go to Twitter
+- search for hashtag #buildinpublic
+
+   A lot of people want to startup a new business and build products in public.
+   Peter levels is one guy - levels.fyi, levels.io, remote.ok
+   he makes lot of websites
+
+   he left his job and start building small small projects. he build website for remote job. levels.fyi, digitalnomad - different countries and work, what are the requirements, hotels , wifi, country by country and city by city and all
+
+   16 to 18 crore making right now. he don't want to work for anyone I want to build products. pdf converter, small small tools
+
+
+build products in public small small products. You can reach out to them I want to intern for you,
+I want to contribute for your project because I want to learn
+that's the only reason I don't want money from you If you can pay me any amount it's fine I don't
+have a Like requirement That I need This much amount of money From you but Let me work with you for
+6 months or 3-4 months You pay me whatever you feel like If you want to pay zero its fine, If you
+want to pay $100That's fine if you want to pay 10000 dollars It's fine Let me work with you. I want
+to just help you to build thingsI am ready to give three four hours daily This will give you true production
+grade experience You can put this experience in your resume and tell them i work with this company ask
+them for exp letterAfter 3 or 6 months just give me experience letter That's all I need from you. Money
+if you like my work UK whatever you feel if you don't like my work then don't pay
+
+
+Today Agenda
+
+How to call 3rd party api
+----------------------------------
+
+Product service, User service, payment service and order service. These services need to talk to each other. Communication between micro services are very important. For ex - Swiggy is calling 3rd party api for otp generation and verifying system
+
+
+
+How to do it party API call ?
+—--------------------------------------
+
+ there are two ways for doing this ➖
+
+1.	RestTemplate - deprecated (Not used anymore).  we are learning because it is easy to learn Syntax is simple
+This is our foundation.
+2.	JerseyClient - It is also deprecated the syntax is also complex.
+3.	 [ SpringClient ] - At the end of the course Current Industry standard. Internal library of spring which is used to make Calls to other services.
+
+
+
+What kind of network calls can you make ?
+—----------------------------------------------------------
+
+Get post put  delete patch is also there
+
+1.	GET - for reading the data
+2.	POST - for creating the data
+3.	PUT - for updates
+4.	DELETE - for deleting the data
+
+
+			To call separate service we need separate service
+EcomProductService  —-------------------->   SeparateService (We use fakestore API)
+
+PATCH - partial update of resource
+PUT - full update
+
+
+Separate service where we are going to make calls
+https://fakestoreapi.com/
+
+
+These are the available API’s
+
+Routes
+All HTTP methods are supported
+	GET/products
+	GET/products/1
+	GET/products/categories
+	GET/products/category/jewelery
+	GET/carts?userId=1
+	GET/products?limit=5
+	POST/products
+	PUT/products/1
+	PATCH/products/1
+	DELETE/products/1
+You can us browser or Postman. If you hit this API - https://fakestoreapi.com/products
+
+You will get list of all products that they have
+
+ [
+  {
+    "id": 1,
+    "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    "price": 109.95,
+    "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    "category": "men's clothing",
+    "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    "rating": {
+      "rate": 3.9,
+      "count": 120
+    }
+  },
+  {
+    "id": 2,
+    "title": "Mens Casual Premium Slim Fit T-Shirts ",
+    "price": 22.3,
+    "description": "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
+    "category": "men's clothing",
+    "image": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
+    "rating": {
+      "rate": 4.1,
+      "count": 259
+    }
+  },
+  {
+    "id": 3,
+    "title": "Mens Cotton Jacket",
+    "price": 55.99,
+    "description": "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.",
+    "category": "men's clothing",
+    "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+    "rating": {
+      "rate": 4.7,
+      "count": 500
+    }
+  },
+  {
+    "id": 4,
+    "title": "Mens Casual Slim Fit",
+    "price": 15.99,
+    "description": "The color could be slightly different between on the screen and in practice. / Please note that body builds vary by person, therefore, detailed size information should be reviewed below on the product description.",
+    "category": "men's clothing",
+    "image": "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
+    "rating": {
+      "rate": 2.1,
+      "count": 430
+    }
+  },
+  {
+    "id": 5,
+    "title": "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
+    "price": 695,
+    "description": "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
+    "category": "jewelery",
+    "image": "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+    "rating": {
+      "rate": 4.6,
+      "count": 400
+    }
+  },
+  {
+    "id": 6,
+    "title": "Solid Gold Petite Micropave ",
+    "price": 168,
+    "description": "Satisfaction Guaranteed. Return or exchange any order within 30 days.Designed and sold by Hafeez Center in the United States. Satisfaction Guaranteed. Return or exchange any order within 30 days.",
+    "category": "jewelery",
+    "image": "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_.jpg",
+    "rating": {
+      "rate": 3.9,
+      "count": 70
+    }
+  },
+  {
+    "id": 7,
+    "title": "White Gold Plated Princess",
+    "price": 9.99,
+    "description": "Classic Created Wedding Engagement Solitaire Diamond Promise Ring for Her. Gifts to spoil your love more for Engagement, Wedding, Anniversary, Valentine's Day...",
+    "category": "jewelery",
+    "image": "https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_.jpg",
+    "rating": {
+      "rate": 3,
+      "count": 400
+    }
+  },
+  {
+    "id": 8,
+    "title": "Pierced Owl Rose Gold Plated Stainless Steel Double",
+    "price": 10.99,
+    "description": "Rose Gold Plated Double Flared Tunnel Plug Earrings. Made of 316L Stainless Steel",
+    "category": "jewelery",
+    "image": "https://fakestoreapi.com/img/51UDEzMJVpL._AC_UL640_QL65_ML3_.jpg",
+    "rating": {
+      "rate": 1.9,
+      "count": 100
+    }
+  },
+  {
+    "id": 9,
+    "title": "WD 2TB Elements Portable External Hard Drive - USB 3.0 ",
+    "price": 64,
+    "description": "USB 3.0 and USB 2.0 Compatibility Fast data transfers Improve PC Performance High Capacity; Compatibility Formatted NTFS for Windows 10, Windows 8.1, Windows 7; Reformatting may be required for other operating systems; Compatibility may vary depending on user’s hardware configuration and operating system",
+    "category": "electronics",
+    "image": "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg",
+    "rating": {
+      "rate": 3.3,
+      "count": 203
+    }
+  },
+  {
+    "id": 10,
+    "title": "SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s",
+    "price": 109,
+    "description": "Easy upgrade for faster boot up, shutdown, application load and response (As compared to 5400 RPM SATA 2.5” hard drive; Based on published specifications and internal benchmarking tests using PCMark vantage scores) Boosts burst write performance, making it ideal for typical PC workloads The perfect balance of performance and reliability Read/write speeds of up to 535MB/s/450MB/s (Based on internal testing; Performance may vary depending upon drive capacity, host device, OS and application.)",
+    "category": "electronics",
+    "image": "https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg",
+    "rating": {
+      "rate": 2.9,
+      "count": 470
+    }
+  },
+  {
+    "id": 11,
+    "title": "Silicon Power 256GB SSD 3D NAND A55 SLC Cache Performance Boost SATA III 2.5",
+    "price": 109,
+    "description": "3D NAND flash are applied to deliver high transfer speeds Remarkable transfer speeds that enable faster bootup and improved overall system performance. The advanced SLC Cache Technology allows performance boost and longer lifespan 7mm slim design suitable for Ultrabooks and Ultra-slim notebooks. Supports TRIM command, Garbage Collection technology, RAID, and ECC (Error Checking & Correction) to provide the optimized performance and enhanced reliability.",
+    "category": "electronics",
+    "image": "https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg",
+    "rating": {
+      "rate": 4.8,
+      "count": 319
+    }
+  },
+  {
+    "id": 12,
+    "title": "WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive",
+    "price": 114,
+    "description": "Expand your PS4 gaming experience, Play anywhere Fast and easy, setup Sleek design with high capacity, 3-year manufacturer's limited warranty",
+    "category": "electronics",
+    "image": "https://fakestoreapi.com/img/61mtL65D4cL._AC_SX679_.jpg",
+    "rating": {
+      "rate": 4.8,
+      "count": 400
+    }
+  },
+  {
+    "id": 13,
+    "title": "Acer SB220Q bi 21.5 inches Full HD (1920 x 1080) IPS Ultra-Thin",
+    "price": 599,
+    "description": "21. 5 inches Full HD (1920 x 1080) widescreen IPS display And Radeon free Sync technology. No compatibility for VESA Mount Refresh Rate: 75Hz - Using HDMI port Zero-frame design | ultra-thin | 4ms response time | IPS panel Aspect ratio - 16: 9. Color Supported - 16. 7 million colors. Brightness - 250 nit Tilt angle -5 degree to 15 degree. Horizontal viewing angle-178 degree. Vertical viewing angle-178 degree 75 hertz",
+    "category": "electronics",
+    "image": "https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_.jpg",
+    "rating": {
+      "rate": 2.9,
+      "count": 250
+    }
+  },
+  {
+    "id": 14,
+    "title": "Samsung 49-Inch CHG90 144Hz Curved Gaming Monitor (LC49HG90DMNXZA) – Super Ultrawide Screen QLED ",
+    "price": 999.99,
+    "description": "49 INCH SUPER ULTRAWIDE 32:9 CURVED GAMING MONITOR with dual 27 inch screen side by side QUANTUM DOT (QLED) TECHNOLOGY, HDR support and factory calibration provides stunningly realistic and accurate color and contrast 144HZ HIGH REFRESH RATE and 1ms ultra fast response time work to eliminate motion blur, ghosting, and reduce input lag",
+    "category": "electronics",
+    "image": "https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg",
+    "rating": {
+      "rate": 2.2,
+      "count": 140
+    }
+  },
+  {
+    "id": 15,
+    "title": "BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats",
+    "price": 56.99,
+    "description": "Note:The Jackets is US standard size, Please choose size as your usual wear Material: 100% Polyester; Detachable Liner Fabric: Warm Fleece. Detachable Functional Liner: Skin Friendly, Lightweigt and Warm.Stand Collar Liner jacket, keep you warm in cold weather. Zippered Pockets: 2 Zippered Hand Pockets, 2 Zippered Pockets on Chest (enough to keep cards or keys)and 1 Hidden Pocket Inside.Zippered Hand Pockets and Hidden Pocket keep your things secure. Humanized Design: Adjustable and Detachable Hood and Adjustable cuff to prevent the wind and water,for a comfortable fit. 3 in 1 Detachable Design provide more convenience, you can separate the coat and inner as needed, or wear it together. It is suitable for different season and help you adapt to different climates",
+    "category": "women's clothing",
+    "image": "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg",
+    "rating": {
+      "rate": 2.6,
+      "count": 235
+    }
+  },
+  {
+    "id": 16,
+    "title": "Lock and Love Women's Removable Hooded Faux Leather Moto Biker Jacket",
+    "price": 29.95,
+    "description": "100% POLYURETHANE(shell) 100% POLYESTER(lining) 75% POLYESTER 25% COTTON (SWEATER), Faux leather material for style and comfort / 2 pockets of front, 2-For-One Hooded denim style faux leather jacket, Button detail on waist / Detail stitching at sides, HAND WASH ONLY / DO NOT BLEACH / LINE DRY / DO NOT IRON",
+    "category": "women's clothing",
+    "image": "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg",
+    "rating": {
+      "rate": 2.9,
+      "count": 340
+    }
+  },
+  {
+    "id": 17,
+    "title": "Rain Jacket Women Windbreaker Striped Climbing Raincoats",
+    "price": 39.99,
+    "description": "Lightweight perfet for trip or casual wear---Long sleeve with hooded, adjustable drawstring waist design. Button and zipper front closure raincoat, fully stripes Lined and The Raincoat has 2 side pockets are a good size to hold all kinds of things, it covers the hips, and the hood is generous but doesn't overdo it.Attached Cotton Lined Hood with Adjustable Drawstrings give it a real styled look.",
+    "category": "women's clothing",
+    "image": "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg",
+    "rating": {
+      "rate": 3.8,
+      "count": 679
+    }
+  },
+  {
+    "id": 18,
+    "title": "MBJ Women's Solid Short Sleeve Boat Neck V ",
+    "price": 9.85,
+    "description": "95% RAYON 5% SPANDEX, Made in USA or Imported, Do Not Bleach, Lightweight fabric with great stretch for comfort, Ribbed on sleeves and neckline / Double stitching on bottom hem",
+    "category": "women's clothing",
+    "image": "https://fakestoreapi.com/img/71z3kpMAYsL._AC_UY879_.jpg",
+    "rating": {
+      "rate": 4.7,
+      "count": 130
+    }
+  },
+  {
+    "id": 19,
+    "title": "Opna Women's Short Sleeve Moisture",
+    "price": 7.95,
+    "description": "100% Polyester, Machine wash, 100% cationic polyester interlock, Machine Wash & Pre Shrunk for a Great Fit, Lightweight, roomy and highly breathable with moisture wicking fabric which helps to keep moisture away, Soft Lightweight Fabric with comfortable V-neck collar and a slimmer fit, delivers a sleek, more feminine silhouette and Added Comfort",
+    "category": "women's clothing",
+    "image": "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg",
+    "rating": {
+      "rate": 4.5,
+      "count": 146
+    }
+  },
+  {
+    "id": 20,
+    "title": "DANVOUY Womens T Shirt Casual Cotton Short",
+    "price": 12.99,
+    "description": "95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.",
+    "category": "women's clothing",
+    "image": "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg",
+    "rating": {
+      "rate": 3.6,
+      "count": 145
+    }
+  }
+]
+
+
+This is getAllProducts kind of cal.l
+
+Similarly if I call this api - https://fakestoreapi.com/products/1(id)
+You will get only one product
+{
+  "id": 1,
+  "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+  "price": 109.95,
+  "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+  "category": "men's clothing",
+  "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+  "rating": {
+    "rate": 3.9,
+    "count": 120
+  }
+}
+
+Similarly if I call this api - https://fakestoreapi.com/products/categories
+I'll get the list of all product categories
+[
+  "electronics",
+  "jewelery",
+  "men's clothing",
+  "women's clothing"
+]
+
+Similarly if I call this api - https://fakestoreapi.com/products/category/jewelery
+I'll get All the products in jewellery category
+[
+  {
+    "id": 5,
+    "title": "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
+    "price": 695,
+    "description": "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
+    "category": "jewelery",
+    "image": "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+    "rating": {
+      "rate": 4.6,
+      "count": 400
+    }
+  },
+  {
+    "id": 6,
+    "title": "Solid Gold Petite Micropave ",
+    "price": 168,
+    "description": "Satisfaction Guaranteed. Return or exchange any order within 30 days.Designed and sold by Hafeez Center in the United States. Satisfaction Guaranteed. Return or exchange any order within 30 days.",
+    "category": "jewelery",
+    "image": "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_.jpg",
+    "rating": {
+      "rate": 3.9,
+      "count": 70
+    }
+  },
+  {
+    "id": 7,
+    "title": "White Gold Plated Princess",
+    "price": 9.99,
+    "description": "Classic Created Wedding Engagement Solitaire Diamond Promise Ring for Her. Gifts to spoil your love more for Engagement, Wedding, Anniversary, Valentine's Day...",
+    "category": "jewelery",
+    "image": "https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_.jpg",
+    "rating": {
+      "rate": 3,
+      "count": 400
+    }
+  },
+  {
+    "id": 8,
+    "title": "Pierced Owl Rose Gold Plated Stainless Steel Double",
+    "price": 10.99,
+    "description": "Rose Gold Plated Double Flared Tunnel Plug Earrings. Made of 316L Stainless Steel",
+    "category": "jewelery",
+    "image": "https://fakestoreapi.com/img/51UDEzMJVpL._AC_UL640_QL65_ML3_.jpg",
+    "rating": {
+      "rate": 1.9,
+      "count": 100
+    }
+  }
+]
+
+If i want to create a product
+fetch('https://fakestoreapi.com/products',{
+            method:"POST",
+            body:JSON.stringify(
+                {
+                    title: 'test product',
+                    price: 13.5,
+                    description: 'lorem ipsum set',
+                    image: 'https://i.pravatar.cc',
+                    category: 'electronic'
+                }
+            )
+        })
+            .then(res=>res.json())
+            .then(json=>console.log(json))
+This is only for testing purpose. This will not store any data.
+
+If i call any post call this will tell you your call is successful and they give a new id but when you search for a product for this id you will not get any product. 200 ok
+Frontend is also service they can call any backend service like fakestore backend or our backend service. Both FE and BE can call this fakestore api
+if you want to call this from postman -
+Get all products
+fetch('https://fakestoreapi.com/products')
+            .then(res=>res.json())  —---------------------- this is javascript
+            .then(json=>console.log(json))
+
+Postman
+GET - https://fakestoreapi.com/products
+[
+    {
+        "id": 1,
+        "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+        "price": 109.95,
+        "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+        "category": "men's clothing",
+        "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+        "rating": {
+            "rate": 3.9,
+            "count": 120
+        }
+    },
+    {
+        "id": 2,
+        "title": "Mens Casual Premium Slim Fit T-Shirts ",
+        "price": 22.3,
+        "description": "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
+        "category": "men's clothing",
+        "image": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
+        "rating": {
+            "rate": 4.1,
+            "count": 259
+        }
+    },
+    {
+        "id": 3,
+        "title": "Mens Cotton Jacket",
+        "price": 55.99,
+        "description": "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.",
+        "category": "men's clothing",
+        "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+        "rating": {
+            "rate": 4.7,
+            "count": 500
+        }
+    },
+    {
+        "id": 4,
+        "title": "Mens Casual Slim Fit",
+        "price": 15.99,
+        "description": "The color could be slightly different between on the screen and in practice. / Please note that body builds vary by person, therefore, detailed size information should be reviewed below on the product description.",
+        "category": "men's clothing",
+        "image": "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
+        "rating": {
+            "rate": 2.1,
+            "count": 430
+        }
+    },
+    {
+        "id": 5,
+        "title": "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
+        "price": 695,
+        "description": "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
+        "category": "jewelery",
+        "image": "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+        "rating": {
+            "rate": 4.6,
+            "count": 400
+        }
+    },
+    {
+        "id": 6,
+        "title": "Solid Gold Petite Micropave ",
+        "price": 168,
+        "description": "Satisfaction Guaranteed. Return or exchange any order within 30 days.Designed and sold by Hafeez Center in the United States. Satisfaction Guaranteed. Return or exchange any order within 30 days.",
+        "category": "jewelery",
+        "image": "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_.jpg",
+        "rating": {
+            "rate": 3.9,
+            "count": 70
+        }
+    },
+    {
+        "id": 7,
+        "title": "White Gold Plated Princess",
+        "price": 9.99,
+        "description": "Classic Created Wedding Engagement Solitaire Diamond Promise Ring for Her. Gifts to spoil your love more for Engagement, Wedding, Anniversary, Valentine's Day...",
+        "category": "jewelery",
+        "image": "https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_.jpg",
+        "rating": {
+            "rate": 3,
+            "count": 400
+        }
+    },
+    {
+        "id": 8,
+        "title": "Pierced Owl Rose Gold Plated Stainless Steel Double",
+        "price": 10.99,
+        "description": "Rose Gold Plated Double Flared Tunnel Plug Earrings. Made of 316L Stainless Steel",
+        "category": "jewelery",
+        "image": "https://fakestoreapi.com/img/51UDEzMJVpL._AC_UL640_QL65_ML3_.jpg",
+        "rating": {
+            "rate": 1.9,
+            "count": 100
+        }
+    },
+    {
+        "id": 9,
+        "title": "WD 2TB Elements Portable External Hard Drive - USB 3.0 ",
+        "price": 64,
+        "description": "USB 3.0 and USB 2.0 Compatibility Fast data transfers Improve PC Performance High Capacity; Compatibility Formatted NTFS for Windows 10, Windows 8.1, Windows 7; Reformatting may be required for other operating systems; Compatibility may vary depending on user’s hardware configuration and operating system",
+        "category": "electronics",
+        "image": "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg",
+        "rating": {
+            "rate": 3.3,
+            "count": 203
+        }
+    },
+    {
+        "id": 10,
+        "title": "SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s",
+        "price": 109,
+        "description": "Easy upgrade for faster boot up, shutdown, application load and response (As compared to 5400 RPM SATA 2.5” hard drive; Based on published specifications and internal benchmarking tests using PCMark vantage scores) Boosts burst write performance, making it ideal for typical PC workloads The perfect balance of performance and reliability Read/write speeds of up to 535MB/s/450MB/s (Based on internal testing; Performance may vary depending upon drive capacity, host device, OS and application.)",
+        "category": "electronics",
+        "image": "https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg",
+        "rating": {
+            "rate": 2.9,
+            "count": 470
+        }
+    },
+    {
+        "id": 11,
+        "title": "Silicon Power 256GB SSD 3D NAND A55 SLC Cache Performance Boost SATA III 2.5",
+        "price": 109,
+        "description": "3D NAND flash are applied to deliver high transfer speeds Remarkable transfer speeds that enable faster bootup and improved overall system performance. The advanced SLC Cache Technology allows performance boost and longer lifespan 7mm slim design suitable for Ultrabooks and Ultra-slim notebooks. Supports TRIM command, Garbage Collection technology, RAID, and ECC (Error Checking & Correction) to provide the optimized performance and enhanced reliability.",
+        "category": "electronics",
+        "image": "https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg",
+        "rating": {
+            "rate": 4.8,
+            "count": 319
+        }
+    },
+    {
+        "id": 12,
+        "title": "WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive",
+        "price": 114,
+        "description": "Expand your PS4 gaming experience, Play anywhere Fast and easy, setup Sleek design with high capacity, 3-year manufacturer's limited warranty",
+        "category": "electronics",
+        "image": "https://fakestoreapi.com/img/61mtL65D4cL._AC_SX679_.jpg",
+        "rating": {
+            "rate": 4.8,
+            "count": 400
+        }
+    },
+    {
+        "id": 13,
+        "title": "Acer SB220Q bi 21.5 inches Full HD (1920 x 1080) IPS Ultra-Thin",
+        "price": 599,
+        "description": "21. 5 inches Full HD (1920 x 1080) widescreen IPS display And Radeon free Sync technology. No compatibility for VESA Mount Refresh Rate: 75Hz - Using HDMI port Zero-frame design | ultra-thin | 4ms response time | IPS panel Aspect ratio - 16: 9. Color Supported - 16. 7 million colors. Brightness - 250 nit Tilt angle -5 degree to 15 degree. Horizontal viewing angle-178 degree. Vertical viewing angle-178 degree 75 hertz",
+        "category": "electronics",
+        "image": "https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_.jpg",
+        "rating": {
+            "rate": 2.9,
+            "count": 250
+        }
+    },
+    {
+        "id": 14,
+        "title": "Samsung 49-Inch CHG90 144Hz Curved Gaming Monitor (LC49HG90DMNXZA) – Super Ultrawide Screen QLED ",
+        "price": 999.99,
+        "description": "49 INCH SUPER ULTRAWIDE 32:9 CURVED GAMING MONITOR with dual 27 inch screen side by side QUANTUM DOT (QLED) TECHNOLOGY, HDR support and factory calibration provides stunningly realistic and accurate color and contrast 144HZ HIGH REFRESH RATE and 1ms ultra fast response time work to eliminate motion blur, ghosting, and reduce input lag",
+        "category": "electronics",
+        "image": "https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg",
+        "rating": {
+            "rate": 2.2,
+            "count": 140
+        }
+    },
+    {
+        "id": 15,
+        "title": "BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats",
+        "price": 56.99,
+        "description": "Note:The Jackets is US standard size, Please choose size as your usual wear Material: 100% Polyester; Detachable Liner Fabric: Warm Fleece. Detachable Functional Liner: Skin Friendly, Lightweigt and Warm.Stand Collar Liner jacket, keep you warm in cold weather. Zippered Pockets: 2 Zippered Hand Pockets, 2 Zippered Pockets on Chest (enough to keep cards or keys)and 1 Hidden Pocket Inside.Zippered Hand Pockets and Hidden Pocket keep your things secure. Humanized Design: Adjustable and Detachable Hood and Adjustable cuff to prevent the wind and water,for a comfortable fit. 3 in 1 Detachable Design provide more convenience, you can separate the coat and inner as needed, or wear it together. It is suitable for different season and help you adapt to different climates",
+        "category": "women's clothing",
+        "image": "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg",
+        "rating": {
+            "rate": 2.6,
+            "count": 235
+        }
+    },
+    {
+        "id": 16,
+        "title": "Lock and Love Women's Removable Hooded Faux Leather Moto Biker Jacket",
+        "price": 29.95,
+        "description": "100% POLYURETHANE(shell) 100% POLYESTER(lining) 75% POLYESTER 25% COTTON (SWEATER), Faux leather material for style and comfort / 2 pockets of front, 2-For-One Hooded denim style faux leather jacket, Button detail on waist / Detail stitching at sides, HAND WASH ONLY / DO NOT BLEACH / LINE DRY / DO NOT IRON",
+        "category": "women's clothing",
+        "image": "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg",
+        "rating": {
+            "rate": 2.9,
+            "count": 340
+        }
+    },
+    {
+        "id": 17,
+        "title": "Rain Jacket Women Windbreaker Striped Climbing Raincoats",
+        "price": 39.99,
+        "description": "Lightweight perfet for trip or casual wear---Long sleeve with hooded, adjustable drawstring waist design. Button and zipper front closure raincoat, fully stripes Lined and The Raincoat has 2 side pockets are a good size to hold all kinds of things, it covers the hips, and the hood is generous but doesn't overdo it.Attached Cotton Lined Hood with Adjustable Drawstrings give it a real styled look.",
+        "category": "women's clothing",
+        "image": "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg",
+        "rating": {
+            "rate": 3.8,
+            "count": 679
+        }
+    },
+    {
+        "id": 18,
+        "title": "MBJ Women's Solid Short Sleeve Boat Neck V ",
+        "price": 9.85,
+        "description": "95% RAYON 5% SPANDEX, Made in USA or Imported, Do Not Bleach, Lightweight fabric with great stretch for comfort, Ribbed on sleeves and neckline / Double stitching on bottom hem",
+        "category": "women's clothing",
+        "image": "https://fakestoreapi.com/img/71z3kpMAYsL._AC_UY879_.jpg",
+        "rating": {
+            "rate": 4.7,
+            "count": 130
+        }
+    },
+    {
+        "id": 19,
+        "title": "Opna Women's Short Sleeve Moisture",
+        "price": 7.95,
+        "description": "100% Polyester, Machine wash, 100% cationic polyester interlock, Machine Wash & Pre Shrunk for a Great Fit, Lightweight, roomy and highly breathable with moisture wicking fabric which helps to keep moisture away, Soft Lightweight Fabric with comfortable V-neck collar and a slimmer fit, delivers a sleek, more feminine silhouette and Added Comfort",
+        "category": "women's clothing",
+        "image": "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg",
+        "rating": {
+            "rate": 4.5,
+            "count": 146
+        }
+    },
+    {
+        "id": 20,
+        "title": "DANVOUY Womens T Shirt Casual Cotton Short",
+        "price": 12.99,
+        "description": "95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.",
+        "category": "women's clothing",
+        "image": "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg",
+        "rating": {
+            "rate": 3.6,
+            "count": 145
+        }
+    }
+]
+Postman
+GET - https://fakestoreapi.com/products/1
+{
+    "id": 1,
+    "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    "price": 109.95,
+    "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    "category": "men's clothing",
+    "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    "rating": {
+        "rate": 3.9,
+        "count": 120
+    }
+}
+Add new product
+fetch('https://fakestoreapi.com/products',{
+            method:"POST",
+            body:JSON.stringify(
+                {
+                    title: 'test product',
+                    price: 13.5,
+                    description: 'lorem ipsum set',
+                    image: 'https://i.pravatar.cc',
+                    category: 'electronic'
+                }
+            )
+        })
+            .then(res=>res.json())
+            .then(json=>console.log(json))
+
+Postman
+POST - https://fakestoreapi.com/products
+SELECT BODY THEN INSIDE BODY RAW AND JSON
+{
+    "title": "test product",
+    "price": "13.5",
+    "description": "lorem ipsum set",
+    "image": "https://i.pravatar.cc",
+    "category": "electronic"
+}
+
+I WILL GET AS RESPONSE 200 OK - IT SAYING THAT YOU HAVE SUCCESSFULLY CREATED PRODUCT
+{
+    "id": 21,
+    "title": "test product",
+    "price": "13.5",
+    "description": "lorem ipsum set",
+    "image": "https://i.pravatar.cc",
+    "category": "electronic"
+}
+BUT IF I TAKE ID = 21
+GET - https://fakestoreapi.com/products/21
+WE WILL NOT GET ANY RESPONSE BECAUSE IT IS A FAKESTORE
+
+PLAN
+1.	USING FAKESTORE WE WILL LEARN How to make call to 3rd ( It can be your own service or any other 3rd party service ) party API’S
+2.	After doing this, ProductService - For our product service we will actually build the entire product service. This product service will allow us
+Features :
+1.	Admin should be able to do CRUD operations For all products.
+2.	Product should have categories.
+3.	User or customers Browse through products (  that means we have to expose API’s that people can come And see all the products,  sort Them by price, Filter them by category, Sort by price, Filter by size(in fashion store like myntra), sort by Availability, Filter by category those things customer should able to do)
+Basic CRUD Api’s for products, CRUD Api’s for categoriesAdmin can add categories delete categoriesAdd products delete productsAdmin can do all those things and users can only browse products ( read products ).
+But right now how do I know Who is an Admin and who is a user/customer I don’t knowBecause you have not built the authentication. Authentication will come later. But for now at least by looking At this features Would you be able to create the API’s ? Yes
+Doubt - What are Api’s ? what is the reason that api exist ? what are headers ? How authentication happens with api’s ? what are cookies  are they used in api’s or not? - In authentication 1 class tokens, cookies, headers, etc detailed of api
+
+Design pattern when we calling 3rd party services - Adapter Design pattern.
+Adapter design pattern is not used always because there are multiple options and i don’t know which one is working well or which one is flourish out or down. For ex - we are building Ecommerce platform for saree selling online and You integrated with razor pay But you have a sale from From tonight 12 o'clock you have a sale And right now 2 or 3 hours before Razer pay crashed for some reason So what will you do your sale is gone All the marketing you did all the money You would spend for the Sale all the preparation That you did all Went in vane This is not a good idea. I have to figure out a alternative way to find the solution for this problem. It Should be easy for us to move but
+
+But my product service and our own user service This case I don't need adaptor design pattern First of all I don't need to switch, even if i switch it is a big big change Not be a small change. if company want to build separate new user service company needs time, make changes slowly slowly  and talk to product service team In this case you don't need quick changes, you don’t need To move from one service to another service quickly, you don’t need To transition in a quick part. I don’t need adapter here.
+third party means outside of your domain.
+
+
+
+
+How do you build it ? or Actual way of doing this
+—--------------------------------------------------------
+What is the Normal flow
+	|
+	|	/ getAllProducts
+             V
+Controller class - The first class in our codebase for handle this getAllProducts
+	|
+	|
+	V
+     Service
+	|
+	|
+ 	V
+   Repository
+	|
+	|
+	V
+        DB
+
+
+
+iN BIG COMPANIES (Non startups) - Atllasian, Intuit, Google, Microsoft,
+Any big company will do - for ex Amazon there is separate team which
+Only work on search bar
+
+Microservice called searchService - for searching I need to access the data,
+and i need to query the data, Everytime you add a new product I should be
+able to know the data, I should be able to see the data and all that
+
+There is separate service called product service where admin can add the
+Data like add new products
+Now product service has its own database and when we are adding products then it will store in product service DB and search service wants updated data and for that both the DB should be in sync for that we have to copy the product service DB data to search service DB but At the Amazon, the level of scale he has that is not a good idea.
+
+Continuous sync is required.
+If they are not using the same DB then it is very big problem.
+Ideally companies will do is that Also setting up DB, maintaining the DB, Letting the
+dB like scale up,All these things are problems Challenges What companies do They don't actually say Hey all of the team All of the micro services You will not create your own database COMPANIES will build one platform service (PLATFORM database )It is also called as DAAS ( database as a service). FORGET ABOUT DB INSTEAD WE HAVE AMAZON STORAGE PRODUCT (ASP).This is not a DB this is a service.  INSide THIS service we have small small databases. creation of the database, maintaining the database, scaling up the data all These things maintained by ASP team.
+Search service - Search team only focus on search
+product service - Product team only focus on product like maximizing the Efficiency of product addition, Product display, product browsing etc
+order service - Order service you focus only on Maximizing the efficiency of placing an order  increasing the speed, making things More smoother And all that
+asp  service - The asp team only cares about the DB service
+we need to call end point exposed by ASP right ? yes
+
+
+ now you can understand how It is very important to call services to services.
+Your search service talk to ASP which is also a service.
+
+What is ASP (Amazon Storage Platform) ?
+SP is nothing but a service on top of  database and it will give you API’s to do all the CRUD operations
+
+
+In Atllasian DSS (DATA STORE SERVICE )
+
+
+Now the code structure little bit changes
+
+	|								|
+	|	/ getAllProducts					|	/ getAllProducts
+             V								V
+Controller class 						Controller class
+	|								|
+	|								|
+	V								V
+     Service 							    Service
+	|								|
+	|								|
+ 	V								V
+   Repository						     Client - instead of repo
+	|								|
+	|								|
+	V								V
+        DB							      DAAS (DATABASE AS
+A SERVICE)
+
+
+There is no DAO ( database access object ) layer  because There is no
+Repository or DAO layer We are not talking to database anymore Since we
+are not talking to database anymore Reporter or DAO layer does not exists. It is not needed So that's why we have client That talks to outside service. client is kind of adapter
+client class will have methods similiar to repo class to do crud operation?
+Yes but we have to write the code it is not simple as that extends jpa repository
+so only DAAS will talk to the DB all other microservice will talk to DAAS?
+YES
+if we directly use the same database for all services what will be the side effects
+DIRECT DATABASE ACCESS LEADS TO SOME ISSUES. HENCE WE USE DAAS
+
+each DB will be having its own DAAS?
+NO, SINGLE Huge size db or huge cluster and DAAS on top of this. no multiple db no multiple DAAS
+Raman bansal
+To: Everyone
+10:10 PM
+in our company we called client as dao layer
+Dao means data access object. That means data access object is used for accessing the data from database not for 3rd party api. For 3rd party we use client.
+Mohamed Salman
+To: Everyone
+10:10 PM
+Talking through api over network takes more time? Is it a disadv?
+No because your code is deployed on suppose datacentre and the DAAS is also present in the same datacentre so the latency is extremely low and it is nearly negligible.
+
+ Summary - For any other thing or service call is implemented using a client class, if multiple Options are present for 3rd party service, then we use “Adapter”
+How we will integrate DAAS ?
+Integrate DAAS is calling any other service. DAAS is also a service. It is similar to calling any other service DAAS,  third party first party SMS provider payment provider
+
+Break
+In IntelliJ
+In controller package
+	We will build first of all build ProductController
+	package dev.vivek.ProductService.controller;
+import org.springframework.web.bind.annotation.RestController;
+@RestController
+public class ProductController {
+}
+
+Let’s build the ProductService
+You remember that you should not directly Build the service class Dependency inversion principle ( Interface )
+This time we follow SOLID coding principles as closely as possible. We would do Methods Let’s do CRUD. Let's do five method
+Create entity package and In entity package First we will create Product entity
+package dev.vivek.ProductService.entity;
+
+public class Product {
+}
+
+In ProductService Interface
+1st Method -
+	List<Product> getAllProducts();
+Base model and all will come later. We are not yet creating the entities
+2nd Method -
+ Product getProduct(UUID productId);
+Abhi toh hum fakestore api use kar rahe hain toh abhi UUID nhii use karenge abhi int hi use karenge
+ Product getProduct(int productId);
+	UUID we will discuss later
+3rd Method -
+	Product createProduct(Product product);
+4th Method -
+	Product updateProduct(Product updatedProduct, int productId);
+	int productId - which product you want to update
+5th Method -
+	boolean deleteProduct(int productId);
+package dev.vivek.ProductService.service;
+import dev.vivek.ProductService.entity.Product;
+import java.util.List;
+import java.util.UUID;
+
+public interface ProductService {
+   List<Product> getAllProducts();
+   Product getProduct(int productId);
+   Product createProduct(Product product);
+   Product updateProduct(Product updatedProduct, int productId);
+   boolean deleteProduct(int productId);
+}
+
+Go to Controller → In ProductController
+   @Autowired
+   private ProductService productService;
+
+This is one way of doing this. This is known as field injection because I am injection via field. I will discuss two more types :- which are constructor injection and getter setter injection that          will come later
+@GetMapping("/product")
+public ResponseEntity getAllProducts() {
+List<Product> products = productService.getAllProducts();
+
+should you return the product Itself back to the UI ? No You should return a DTO. So
+I will create a new DTO class called ProductResponseDTO.
+	package dev.vivek.ProductService.dto;
+
+public class ProductResponseDTO {
+private int productId;
+   private String title; // title is the name basically
+   private double price;
+   private String description;
+   private String category; // see here we need to put category       object . If I have product, it should contain category object but for now I am using category name only
+   private String imageURL;
+   private double rating;
+}
+
+
+Full form of DTO is Data Transfer Object. This is what Data you finally Want to return back to User or UI or any other service. You put that inside a DTO. It's a response That your API is giving Basically what you want to give as a response that’s the basic or fundamental of it.
+
+Abir Rakshit
+To: Everyone
+10:32 PM
+preoduct id kyun bhejna ?
+Product id is required na because why do you want to send productId Imagine I am on UI I am selecting a product Let's say I am doing add to cart for a particular product. So how would my UI tell the backend that this is the product you want to add to the cart. So you  UI needs To know na  this is the ID So  UI will say to the backend that hey This product ID needs to  added to the cart or let’s say wishlist. So how will UI know for that we need to send the productId.
+
+
+
+Now you remember, How do we convert from Entity object to DTO ? - Mapper
+So we create a new class called ProductEntityDTOMapper in different package called mapper.
+
+And then I will go ahead And create static methods
+
+package dev.vivek.ProductService.mapper;
+
+
+import dev.vivek.ProductService.dto.ProductResponseDTO;
+import dev.vivek.ProductService.entity.Product;
+
+
+public class ProductEntityDTOMapper {
+   public static ProductResponseDTO convertProductEntityToProductResponseDTO (Product product) {
+       ProductResponseDTO responseDTO = new ProductResponseDTO();
+       /* I will add getter and setter
+           package dev.vivek.ProductService.dto;
+
+
+           import lombok.Getter;
+           import lombok.Setter;
+
+
+           @Getter
+           @Setter
+           public class ProductResponseDTO {
+               private int productId;
+               private String title; // title is the name basically
+               private double price;
+               private String description;
+               private String category; // see this is the category object. If I have product it should contain category object but for now I will use category name only
+               private String imageURL;
+               private double rating;
+           }
+}
+        */
+
+	Product mein we have not yet added the data. So Goto Product class and add all the attributes
+	/*
+	package dev.vivek.ProductService.entity;
+
+
+	import lombok.Getter;
+	import lombok.Setter;
+
+
+	@Getter
+	@Setter
+	public class Product {
+   		private int id;
+   		private String title; // title is the name basically
+   		private double price;
+   		private String description;
+   		private String category; // see this is the category object. If I have product it should contain category object but for now I will use category name only
+   		private String imageURL;
+   		private double rating;
+	}
+*/
+For The time being I am keeping it for like thisI'll change this when weSet up the database and all
+
+	responseDTO.setProductId(product.getId());
+	responseDTO.setTitle(product.getTitle());
+	responseDTO.setPrice(product.getPrice());
+	responseDTO.setDescription(product.getDescription());
+	responseDTO.setCategory(product.getCategory());
+	responseDTO.setImageURL(product.getImageURL());
+	responseDTO.setRating(product.getRating());
+	return responseDTO;
+
+   }
+}
+
+package dev.vivek.ProductService.mapper;
+
+import dev.vivek.ProductService.dto.ProductResponseDTO;
+import dev.vivek.ProductService.entity.Product;
+
+public class ProductEntityDTOMapper {
+   public static ProductResponseDTO convertProductEntityToProductResponseDTO (Product product) {
+       ProductResponseDTO responseDTO = new ProductResponseDTO();
+       responseDTO.setProductId(product.getId());
+       responseDTO.setTitle(product.getTitle());
+       responseDTO.setPrice(product.getPrice());
+       responseDTO.setDescription(product.getDescription());
+       responseDTO.setCategory(product.getCategory());
+       responseDTO.setImageURL(product.getImageURL());
+       responseDTO.setRating(product.getRating());
+       return responseDTO;
+   }
+}
+
+So DTO to Mapper is basically what happens is that When you create an object You are working with an object, It will contain a lot more data. Basically when you create an Entity ( basically the data that you stored in your database ). The Entity contains a lot extra information which are relevant to your backend but might not be relevant to the customer, might not be relevant to the frontend. So We don’t end up sending the entire information to the frontend. For example let say A user you might Store The user details - email, password, And everything In your backend database But you don't need to sendThe password when the user is looking at their account  ( when the user is looking at their account information ) they don’t need to see the password. So you don’t send the password. So if you use the same object To transfer the data between frontend and backend. For example If I use this  product object Which will eventually become An entity something that will be stored in our database If I use the same object To send the data back To the frontend Then I will end up sending all the information. I don't want to send all the information.
+package dev.vivek.ProductService.entity;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class Product {
+   private int id;
+   private String title; // title is the name basically
+   private double price;
+   private String description;
+   private String category; // see this is the category object. If I have product it should contain category object but for now I will use category name only
+   private String imageURL;
+   private double rating;
+}
+
+For example if I am Sending back the user Information I want to trim the password part. So what  I'll do I will create the separate class called UserResponseDTO Where I will add Only those attributes  which will be important For the frontend part Not all the information that is required. So I will only add The required information Those attributes   and then I'll Create a mapper. Mapper is basically  those methods Which takes input of an entity And return backs a DTO. Or takes input of a DTO And return backs an entity.
+	public class ProductEntityDTOMapper {
+    		public static ProductResponseDTO                  convertProductEntityToProductResponseDTO (Product product) {
+        		ProductResponseDTO responseDTO = new ProductResponseDTO();
+        		responseDTO.setProductId(product.getId());
+        		responseDTO.setTitle(product.getTitle());
+        		responseDTO.setPrice(product.getPrice());
+        		responseDTO.setDescription(product.getDescription());
+        		responseDTO.setCategory(product.getCategory());
+        		responseDTO.setImageURL(product.getImageURL());
+        		responseDTO.setRating(product.getRating());
+        		return responseDTO;
+    	}
+}
+Pulkit Sharma
+To: Everyone
+10:40 PM
+so in short the info which is needed for ui that data only?
+Correct
+Go to service package — > create service class
+By the way I will create two services here - One service which will call the client for fakestore and later on like in the next class We will create a service which will call the db Of product service. So this is just for demo By the way. Now if I have two service implementation for example let say I will create one class
+package dev.vivek.ProductService.service;
+
+import dev.vivek.ProductService.entity.Product;
+
+import java.util.List;
+
+public class FakeStoreProductServiceImpl implements ProductService {
+
+   @Override
+   public List<Product> getAllProducts() {
+       return List.of();
+   }
+
+   @Override
+   public Product getProduct(int productId) {
+       return null;
+   }
+
+   @Override
+   public Product createProduct(Product product) {
+       return null;
+   }
+
+   @Override
+   public Product updateProduct(Product updatedProduct, int productId) {
+       return null;
+   }
+
+   @Override
+   public boolean deleteProduct(int productId) {
+       return false;
+   }
+}
+
+I will create one more class - the normal product service which will call the db
+package dev.vivek.ProductService.service;
+
+import dev.vivek.ProductService.entity.Product;
+
+import java.util.List;
+
+public class ProductServiceImpl implements ProductService{
+
+   @Override
+   public List<Product> getAllProducts() {
+       return null;
+   }
+
+   @Override
+   public Product getProduct(int productId) {
+       return null;
+   }
+
+   @Override
+   public Product createProduct(Product product) {
+       return null;
+   }
+
+   @Override
+   public Product updateProduct(Product updatedProduct, int productId) {
+       return null;
+   }
+
+   @Override
+   public boolean deleteProduct(int productId) {
+       return false;
+   }
+}
+
+So I have two implementations Now if I have two implementations And in product controller I am auto wiring the service class ( which is product service interface) not autowiring the Implementation class. I am auto wiring the interface. So how will my  Controller know that Which particular class to autowire FakeStoreProductServiceImpl or the normal implementation. If I am start the service you will see what will happen ?
+ package dev.vivek.ProductService.controller;
+
+import dev.vivek.ProductService.entity.Product;
+import dev.vivek.ProductService.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+public class ProductController {
+   @Autowired
+   private ProductService productService; // This is known as field injection because I am injection via field
+
+   @GetMapping("/product")
+   public ResponseEntity getAllProducts() {
+       List<Product> products = productService.getAllProducts();
+       // should you return the product Itself back to the UI ? No You should return a DTO. So
+       // I will create a new DTO class called ProductResponseDTO.
+
+   }
+}
+
+If i run the application
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field productService in dev.vivek.ProductService.controller.ProductController required a bean of type 'dev.vivek.ProductService.service.ProductService' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'dev.vivek.ProductService.service.ProductService' in your configuration.
+
+Disconnected from the target VM, address: '127.0.0.1:56668', transport: 'socket'
+
+Process finished with exit code 1
+
+
+Consider defining a bean of type 'dev.vivek.ProductService.service.ProductService' in your configuration. ( it was not able to inject the bean because it was not able to understand which one to inject). So we will use something called as Qualifier
+By the way i will forgot to put @Service annotation on FakeStoreProductServiceImpl class and ProductServiceImpl class. Now i run the application
+
+
+"C:\Program Files\Java\jdk-17.0.5\bin\java.exe" -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:56756,suspend=y,server=n -javaagent:C:\Users\vivek\AppData\Local\JetBrains\IdeaIC2023.3\captureAgent\debugger-agent.jar -Dfile.encoding=UTF-8 -classpath "C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject\ProductService\ProductService\target\classes;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.3.1\spring-boot-starter-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter\3.3.1\spring-boot-starter-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot\3.3.1\spring-boot-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.3.1\spring-boot-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.3.1\spring-boot-starter-logging-3.3.1.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-classic\1.5.6\logback-classic-1.5.6.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-core\1.5.6\logback-core-1.5.6.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.23.1\log4j-to-slf4j-2.23.1.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-api\2.23.1\log4j-api-2.23.1.jar;C:\Users\vivek\.m2\repository\org\slf4j\jul-to-slf4j\2.0.13\jul-to-slf4j-2.0.13.jar;C:\Users\vivek\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\vivek\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.3.1\spring-boot-actuator-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator\3.3.1\spring-boot-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.17.1\jackson-databind-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.17.1\jackson-annotations-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.17.1\jackson-core-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.17.1\jackson-datatype-jsr310-2.17.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-observation\1.13.1\micrometer-observation-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-commons\1.13.1\micrometer-commons-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-jakarta9\1.13.1\micrometer-jakarta9-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-core\1.13.1\micrometer-core-1.13.1.jar;C:\Users\vivek\.m2\repository\org\hdrhistogram\HdrHistogram\2.2.2\HdrHistogram-2.2.2.jar;C:\Users\vivek\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.3.1\spring-boot-starter-web-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.3.1\spring-boot-starter-json-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.17.1\jackson-datatype-jdk8-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.17.1\jackson-module-parameter-names-2.17.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.3.1\spring-boot-starter-tomcat-3.3.1.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.25\tomcat-embed-core-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.25\tomcat-embed-el-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.25\tomcat-embed-websocket-10.1.25.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-web\6.1.10\spring-web-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-beans\6.1.10\spring-beans-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-webmvc\6.1.10\spring-webmvc-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-aop\6.1.10\spring-aop-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-context\6.1.10\spring-context-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-expression\6.1.10\spring-expression-6.1.10.jar;C:\Users\vivek\.m2\repository\org\postgresql\postgresql\42.7.3\postgresql-42.7.3.jar;C:\Users\vivek\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\vivek\.m2\repository\org\projectlombok\lombok\1.18.32\lombok-1.18.32.jar;C:\Users\vivek\.m2\repository\org\slf4j\slf4j-api\2.0.13\slf4j-api-2.0.13.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-core\6.1.10\spring-core-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-jcl\6.1.10\spring-jcl-6.1.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.3.3\lib\idea_rt.jar" dev.vivek.ProductService.ProductServiceApplication
+Connected to the target VM, address: '127.0.0.1:56756', transport: 'socket'
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2024-07-24T22:14:35.142+05:30  INFO 22832 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : Starting ProductServiceApplication using Java 17.0.5 with PID 22832 (C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject\ProductService\ProductService\target\classes started by vivek in C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject)
+2024-07-24T22:14:35.149+05:30  INFO 22832 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-07-24T22:14:37.148+05:30  INFO 22832 --- [ProductService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-24T22:14:37.166+05:30  INFO 22832 --- [ProductService] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-24T22:14:37.166+05:30  INFO 22832 --- [ProductService] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-24T22:14:37.266+05:30  INFO 22832 --- [ProductService] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-24T22:14:37.268+05:30  INFO 22832 --- [ProductService] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2028 ms
+2024-07-24T22:14:37.592+05:30  WARN 22832 --- [ProductService] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'productController': Unsatisfied dependency expressed through field 'productService': No qualifying bean of type 'dev.vivek.ProductService.service.ProductService' available: expected single matching bean but found 2: fakeStoreProductServiceImpl,productServiceImpl
+2024-07-24T22:14:37.597+05:30  INFO 22832 --- [ProductService] [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-07-24T22:14:37.629+05:30  INFO 22832 --- [ProductService] [           main] .s.b.a.l.ConditionEvaluationReportLogger :
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-07-24T22:14:37.665+05:30 ERROR 22832 --- [ProductService] [           main] o.s.b.d.LoggingFailureAnalysisReporter   :
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field productService in dev.vivek.ProductService.controller.ProductController required a single bean, but 2 were found:
+	- fakeStoreProductServiceImpl: defined in file [C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject\ProductService\ProductService\target\classes\dev\vivek\ProductService\service\FakeStoreProductServiceImpl.class]
+	- productServiceImpl: defined in file [C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject\ProductService\ProductService\target\classes\dev\vivek\ProductService\service\ProductServiceImpl.class]
+
+This may be due to missing parameter name information
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+Ensure that your compiler is configured to use the '-parameters' flag.
+You may need to update both your build tool settings as well as your IDE.
+(See https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-6.x#parameter-name-retention)
+
+
+Disconnected from the target VM, address: '127.0.0.1:56756', transport: 'socket'
+
+Process finished with exit code 1
+
+ Explanation :
+	This may be due to missing parameter name information
+Action:
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+I will discuss @Qualifier in the next class when i implement the db based service Abhi we will only focus on FakeStoreProductServiceImpl so we will delete the ProductServiceImpl - this is db based service.
+Abhi we will do, we will create a separate class called
+FakeStoreClient in client package
+Abhi sabse pehle let’s start working on this FakeStoreClient. So first Let's try to see How we can make the call To fakestore Uske baad we will see The separate stuff.
+1.	First thing first But I need is something called as rest template Builder
+	private RestTemplateBuilder restTemplateBuilder;
+2.	Next I need two things : 1. I need to knowWhat is the domain URL for ex - In our FakeStore, if i am calling FakeStore Their might be separate URLs - there might be product url, category url, etc But the domain  name remain the same -  www.fakestoreapi.com Path url might keep on changing. So for that I will use two variables One is the API ka URL Like domain URL And another I will use the path, the end point The base  URL
+private String fakeStoreAPIBaseUrl;
+	private String fakeStoreAPIProductPath; - Path to the product Api
+	Similarly You can have category path, you can have other paths whatever you need.
+	I am dividing the entire URL into two parts :
+1. baseURL which is domain (www.fakestoreapi.com) Which is always going        to be the same.
+2. But the path to separate separate Api or separate separate functionality.          For ex - CRUD operations for products will be /product
+	CRUD operations for category will be /category
+	So the endpoint is different, the path is different but the domain or base url is same. So i have created 2 variables -
+1. baseURL - which is containing the domain of fakestore
+2. Productpath - which contains the path to the product
+package dev.vivek.ProductService.client;
+
+import org.springframework.boot.web.client.RestTemplateBuilder;
+
+public class FakeStoreClient {
+   private RestTemplateBuilder restTemplateBuilder;
+   private String fakeStoreAPIBaseUrl;
+   private String fakeStoreAPIProductPath; // Path to the product Api
+}
+
+
+So Where do you store these kind of things or data
+Do you store them in the code ? or somewhere else - constant files (enum is used for code constant but this kind of constants are not part of the code). We can store these kind of constants in application.properties file
+spring.application.name=ProductService
+management.endpoints.web.exposure.include=mappings
+
+#FakeStoreAPI configurations
+fakestore.api.base.url = https://fakestoreapi.com
+fakestore.api.product.path = /products
+fakestore.api.category.path = /category
+
+#2nd option - why we not use this ? because https://fakestoreapi.com is repeating twice.
+#              Here it might not look that big of a deal because it is happening only
+#              two times but what if it becomes 10 such items like product, category, order
+#              payment, etc. Then would you setup 10 times https://fakestoreapi.com. It
+#              is not a good idea. we cannot config in controller class you can put inside
+#              a String but not a good idea. in realtime project we are going to follow same approach.
+#fakestore.product.url = https://fakestoreapi.com/products
+#fakestore.category.url = https://fakestoreapi.com/category
+
+Now How do I make sure that these variables get the required value there should be a way to read the values from application.properties and inject them here. There is a way which is @Value(inside this value you put the entire url - “ ${fakestore.api.base.url}”) and for rest template builder i will do @Autowired
+package dev.vivek.ProductService.client;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+
+public class FakeStoreClient {
+   @Autowired
+   private RestTemplateBuilder restTemplateBuilder;
+   @Value("${fakestore.api.base.url}") // this annotation will fetch the value from application.properties and inject that value to this variable
+   private String fakeStoreAPIBaseUrl;
+   @Value("${fakestore.api.product.path}")
+   private String fakeStoreAPIProductPath; // Path to the product Api
+}
+
+@Value annotation(“${key in app.properties}”) - // this annotation will fetch the value from application.properties and inject that value to this variable
+
+Ashish Kumar
+To: Everyone
+10:53 PM
+Can't we use @RequestMapping ?
+Ans -  @RequestMapping, @GetMapping or @PostMapping we use to create our own api’s. I am not going to create my own api. I am going to call api’s of fakestore service.
+
+Manu S.R.
+To: Everyone
+10:53 PM
+what is the use of Rest template Builder?
+Rest template Builder will help us to make calls to the other service - like fakestore service or any other service
+
+Get All Products -
+	public List<Product> getAllProducts() {
+   /* Now here When you call getAllProducts(), it should return back a response. what should it return ? should it return Product
+      should it return List<Product> ? No. You cannot do that
+      See Product is your Entity later down the line we are going to create our database, our tables using Product.
+      Everything can be changed but schema change is the biggest pain out there. So what we will do now ? tell me onething
+      if later on let's say we use Product it's working all good but later on let's imagine that fakestoreapi changes their
+      Response type possible ? they might change it's their codebase, they might update their api if they change their response
+      Here if you change Product, your entire codebase is racked. You cannot change Product because Product is your Entity.
+      If you change Product your entire codebase is gone.
+      So we have to keep things loosely coupled. So that even if fakestore service makes some change, even if the api's of
+      fakestore bring some change, it should not impact my entire code. It should only impact this particular client class.
+      It should not impact anywhere else. So for fakestore again I will create a separate DTO. So, I will create a separate DTO
+      called FakeStoreProductResponseDTO so that it is loosely coupled. so that we don't worry about fakestore changing the changes.
+
+    */
+
+package dev.vivek.ProductService.dto;
+
+public class FakeStoreProductResponseDTO {
+
+}
+
+/* This is what fakestore is returning
+{
+   "id": 1,
+   "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+   "price": 109.95,
+   "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+   "category": "men's clothing",
+   "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+   "rating": {
+       "rate": 3.9,
+       "count": 120
+   }
+}
+*/
+
+When you creating this ResponseDTO, understand one thing - what will fakestore service return back to us ? return a JSON but in the code what will you return ? FakeStoreProductResponseDTO object.
+
+You are getting JSON but inside your code you are returning an object.
+
+What is serialization and deserialization ?
+
+Serialization - Serialization is the process of converting an object to a json string
+Deserialization - Deserialization is the process of converting a json string to an object.
+
+So whenever this happens na make sure that the keys of your JSON is matching with the attribute name of your object.
+
+public List<FakeStoreProductResponseDTO> getAllProducts() {
+
+}
+
+Pulkit Sharma
+To: Everyone
+10:57 PM
+for every endpoint response need to create separate dto?
+Yes for every different response you have to create separate dto.
+
+What is serialization and deserialization ?
+
+Serialization - Serialization is the process of converting an object to a json string
+Deserialization - Deserialization is the process of converting a json string to an object.
+
+So whenever this happens na make sure that the keys of your JSON is matching with the attribute name of your object. For example - instead of id i wrote productId
+Then without any extra work if you don’t want to do extra work (if you don’t want to put any extra annotations) then this will fail.
+
+package dev.vivek.ProductService.dto;
+
+public class FakeStoreProductResponseDTO {
+   private int productId;
+}
+
+/* This is what fakestore is returning
+{
+   "id": 1,
+   "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+   "price": 109.95,
+   "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+   "category": "men's clothing",
+   "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+   "rating": {
+       "rate": 3.9,
+       "count": 120
+   }
+}
+*/
+
+
+So it is generally a good practice that you should follow is that make sure that the attribute name matches with the JSON ka key for ex - id. Now if I come to thi part
+"rating": {
+   "rate": 3.9,
+   "count": 120
+}
+
+Rating is a combination of two attributes. When you have combination of data is it a primitive ? NO
+
+List would something like this in json
+“Rating” : [1, 2, 3]
+Above rating is not a list
+
+Rating is an object
+So i will go inside my dto package and create FakeStoreProductRatingDTO.
+And inside this dto i will two attributes
+"rating": {
+   "rate": 3.9,
+   "count": 120
+}
+
+package dev.vivek.ProductService.dto;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class FakeStoreProductRatingDTO {
+   private double rate;
+   private int count;
+}
+
+/*
+   {
+       "rate": 3.9,
+       "count": 120
+   }
+*/
+
+
+package dev.vivek.ProductService.dto;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class FakeStoreProductResponseDTO { // this the dto we are expecting from fakestore
+   private int id;
+   private String title;
+   private double price;
+   private String description;
+   private String category;
+   private String image;
+   private FakeStoreProductRatingDTO rating;
+}
+
+
+
+
+
+/* This is what fakestore is returning
+{
+   "id": 1,
+   "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+   "price": 109.95,
+   "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+   "category": "men's clothing",
+   "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+   "rating": {
+       "rate": 3.9,
+       "count": 120
+   }
+}
+*/
+
+Come to FakeStoreClient
+1.	So first of all, to make the call i have to create the entire url.
+String fakeStoreGetAllProductURL = fakeStoreAPIBaseUrl.concat(fakeStoreAPIProductPath);
+
+2.	Once the url is created i will use the rest template
+RestTemplate restTemplate = restTemplateBuilder.build();
+
+3.	Using rest template i will make the call
+It will also return ResponseEntity
+package dev.vivek.ProductService.client;
+
+import dev.vivek.ProductService.dto.FakeStoreProductResponseDTO;
+import dev.vivek.ProductService.entity.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+
+public class FakeStoreClient {
+   @Autowired
+   private RestTemplateBuilder restTemplateBuilder;
+   @Value("${fakestore.api.base.url}") // this annotation will fetch the value from application.properties and inject that value to this variable
+   private String fakeStoreAPIBaseUrl;
+   @Value("${fakestore.api.product.path}")
+   private String fakeStoreAPIProductPath; // Path to the product Api
+
+   public List<FakeStoreProductResponseDTO> getAllProducts() {
+       /* Now here When you call getAllProducts(), it should return back a response. what should it return ? should it return Product
+          should it return List<Product> ? No. You cannot do that
+          See Product is your Entity later down the line we are going to create our database, our tables using Product.
+          Everything can be changed but schema change is the biggest pain out there. So what we will do now ? tell me onething
+          if later on let's say we use Product it's working all good but later on let's imagine that fakestoreapi changes their
+          Response type possible ? they might change it's their codebase, they might update their api if they change their response
+          Here if you change Product, your entire codebase is racked. You cannot change Product because Product is your Entity.
+          If you change Product your entire codebase is gone.
+          So we have to keep things loosely coupled. So that even if fakestore service makes some change, even if the api's of
+          fakestore bring some change, it should not impact my entire code. It should only impact this particular client class.
+          It should not impact anywhere else. So for fakestore again I will create a separate DTO. So, I will create a separate DTO
+          called FakeStoreProductResponseDTO so that it is loosely coupled. so that we don't worry about fakestore changing the changes.
+
+        */
+       String fakeStoreGetAllProductURL = fakeStoreAPIBaseUrl.concat(fakeStoreAPIProductPath);
+       RestTemplate restTemplate = restTemplateBuilder.build();
+       ResponseEntity<FakeStoreProductResponseDTO[]> productResponseList =
+               restTemplate.getForEntity(fakeStoreGetAllProductURL, FakeStoreProductResponseDTO[].class);
+       return List.of(productResponseList.getBody());
+
+   }
+}
+
+The response that is coming from fakestore is json string and we need to tell the function that you will get json and i want response in this type of object. we need response in this object type
+
+    }
+
+FakeStoreServiceImpl in service package
+package dev.vivek.ProductService.service;
+
+import dev.vivek.ProductService.client.FakeStoreClient;
+import dev.vivek.ProductService.dto.FakeStoreProductResponseDTO;
+import dev.vivek.ProductService.entity.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+@Service
+public class FakeStoreProductServiceImpl implements ProductService {
+
+   @Autowired
+   private FakeStoreClient fakeStoreClient;
+   @Override
+   public List<FakeStoreProductResponseDTO> getAllProducts() {
+       List<FakeStoreProductResponseDTO> fakeStoreProducts = fakeStoreClient.getAllProducts();
+       return fakeStoreProducts;
+   }
+
+   @Override
+   public Product getProduct(int productId) {
+       return null;
+   }
+
+   @Override
+   public Product createProduct(Product product) {
+       return null;
+   }
+
+   @Override
+   public Product updateProduct(Product updatedProduct, int productId) {
+       return null;
+   }
+
+   @Override
+   public boolean deleteProduct(int productId) {
+       return false;
+   }
+}
+
+For the time being i am changing the return type of getAllProducts in ProductService interface
+package dev.vivek.ProductService.service;
+
+import dev.vivek.ProductService.dto.FakeStoreProductResponseDTO;
+import dev.vivek.ProductService.entity.Product;
+
+import java.util.List;
+import java.util.UUID;
+
+public interface ProductService {
+   List<FakeStoreProductResponseDTO> getAllProducts();
+   Product getProduct(int productId);
+   Product createProduct(Product product);
+   Product updateProduct(Product updatedProduct, int productId);
+   boolean deleteProduct(int productId);
+}
+
+Use of @Autowired - object of this is created and injected inside this class.
+But FakeStoreClient class does not have any annotation so that componentScan scans  and create the object and store it in ioc container. I will run the code and see what happens
+In Product controller change instead of Product we need to write FakeStoreProductResponseDTO for now.
+"C:\Program Files\Java\jdk-17.0.5\bin\java.exe" -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:59026,suspend=y,server=n -javaagent:C:\Users\vivek\AppData\Local\JetBrains\IdeaIC2023.3\captureAgent\debugger-agent.jar -Dfile.encoding=UTF-8 -classpath "C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject\ProductService\ProductService\target\classes;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.3.1\spring-boot-starter-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter\3.3.1\spring-boot-starter-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot\3.3.1\spring-boot-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.3.1\spring-boot-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.3.1\spring-boot-starter-logging-3.3.1.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-classic\1.5.6\logback-classic-1.5.6.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-core\1.5.6\logback-core-1.5.6.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.23.1\log4j-to-slf4j-2.23.1.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-api\2.23.1\log4j-api-2.23.1.jar;C:\Users\vivek\.m2\repository\org\slf4j\jul-to-slf4j\2.0.13\jul-to-slf4j-2.0.13.jar;C:\Users\vivek\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\vivek\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.3.1\spring-boot-actuator-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator\3.3.1\spring-boot-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.17.1\jackson-databind-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.17.1\jackson-annotations-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.17.1\jackson-core-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.17.1\jackson-datatype-jsr310-2.17.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-observation\1.13.1\micrometer-observation-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-commons\1.13.1\micrometer-commons-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-jakarta9\1.13.1\micrometer-jakarta9-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-core\1.13.1\micrometer-core-1.13.1.jar;C:\Users\vivek\.m2\repository\org\hdrhistogram\HdrHistogram\2.2.2\HdrHistogram-2.2.2.jar;C:\Users\vivek\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.3.1\spring-boot-starter-web-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.3.1\spring-boot-starter-json-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.17.1\jackson-datatype-jdk8-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.17.1\jackson-module-parameter-names-2.17.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.3.1\spring-boot-starter-tomcat-3.3.1.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.25\tomcat-embed-core-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.25\tomcat-embed-el-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.25\tomcat-embed-websocket-10.1.25.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-web\6.1.10\spring-web-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-beans\6.1.10\spring-beans-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-webmvc\6.1.10\spring-webmvc-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-aop\6.1.10\spring-aop-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-context\6.1.10\spring-context-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-expression\6.1.10\spring-expression-6.1.10.jar;C:\Users\vivek\.m2\repository\org\postgresql\postgresql\42.7.3\postgresql-42.7.3.jar;C:\Users\vivek\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\vivek\.m2\repository\org\projectlombok\lombok\1.18.32\lombok-1.18.32.jar;C:\Users\vivek\.m2\repository\org\slf4j\slf4j-api\2.0.13\slf4j-api-2.0.13.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-core\6.1.10\spring-core-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-jcl\6.1.10\spring-jcl-6.1.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.3.3\lib\idea_rt.jar" dev.vivek.ProductService.ProductServiceApplication
+Connected to the target VM, address: '127.0.0.1:59026', transport: 'socket'
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2024-07-25T02:50:07.869+05:30  INFO 28516 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : Starting ProductServiceApplication using Java 17.0.5 with PID 28516 (C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject\ProductService\ProductService\target\classes started by vivek in C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject)
+2024-07-25T02:50:07.882+05:30  INFO 28516 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-07-25T02:50:12.209+05:30  INFO 28516 --- [ProductService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-25T02:50:12.245+05:30  INFO 28516 --- [ProductService] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-25T02:50:12.246+05:30  INFO 28516 --- [ProductService] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-25T02:50:12.425+05:30  INFO 28516 --- [ProductService] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-25T02:50:12.447+05:30  INFO 28516 --- [ProductService] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4313 ms
+2024-07-25T02:50:12.908+05:30  WARN 28516 --- [ProductService] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'productController': Unsatisfied dependency expressed through field 'productService': Error creating bean with name 'fakeStoreProductServiceImpl': Unsatisfied dependency expressed through field 'fakeStoreClient': No qualifying bean of type 'dev.vivek.ProductService.client.FakeStoreClient' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2024-07-25T02:50:12.916+05:30  INFO 28516 --- [ProductService] [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-07-25T02:50:12.974+05:30  INFO 28516 --- [ProductService] [           main] .s.b.a.l.ConditionEvaluationReportLogger :
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-07-25T02:50:13.020+05:30 ERROR 28516 --- [ProductService] [           main] o.s.b.d.LoggingFailureAnalysisReporter   :
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field fakeStoreClient in dev.vivek.ProductService.service.FakeStoreProductServiceImpl required a bean of type 'dev.vivek.ProductService.client.FakeStoreClient' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'dev.vivek.ProductService.client.FakeStoreClient' in your configuration.
+
+Disconnected from the target VM, address: '127.0.0.1:59026', transport: 'socket'
+
+Process finished with exit code 1
+
+FakeStoreClient' is not a Service, it is not a repository, it is not a controller, sp if they are nothing then we will use @Component annotation
+If i run the application then there will be no error because the injection happens.
+
+
+"C:\Program Files\Java\jdk-17.0.5\bin\java.exe" -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:59242,suspend=y,server=n -javaagent:C:\Users\vivek\AppData\Local\JetBrains\IdeaIC2023.3\captureAgent\debugger-agent.jar -Dfile.encoding=UTF-8 -classpath "C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject\ProductService\ProductService\target\classes;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.3.1\spring-boot-starter-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter\3.3.1\spring-boot-starter-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot\3.3.1\spring-boot-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.3.1\spring-boot-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.3.1\spring-boot-starter-logging-3.3.1.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-classic\1.5.6\logback-classic-1.5.6.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-core\1.5.6\logback-core-1.5.6.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.23.1\log4j-to-slf4j-2.23.1.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-api\2.23.1\log4j-api-2.23.1.jar;C:\Users\vivek\.m2\repository\org\slf4j\jul-to-slf4j\2.0.13\jul-to-slf4j-2.0.13.jar;C:\Users\vivek\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\vivek\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.3.1\spring-boot-actuator-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator\3.3.1\spring-boot-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.17.1\jackson-databind-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.17.1\jackson-annotations-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.17.1\jackson-core-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.17.1\jackson-datatype-jsr310-2.17.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-observation\1.13.1\micrometer-observation-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-commons\1.13.1\micrometer-commons-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-jakarta9\1.13.1\micrometer-jakarta9-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-core\1.13.1\micrometer-core-1.13.1.jar;C:\Users\vivek\.m2\repository\org\hdrhistogram\HdrHistogram\2.2.2\HdrHistogram-2.2.2.jar;C:\Users\vivek\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.3.1\spring-boot-starter-web-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.3.1\spring-boot-starter-json-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.17.1\jackson-datatype-jdk8-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.17.1\jackson-module-parameter-names-2.17.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.3.1\spring-boot-starter-tomcat-3.3.1.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.25\tomcat-embed-core-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.25\tomcat-embed-el-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.25\tomcat-embed-websocket-10.1.25.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-web\6.1.10\spring-web-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-beans\6.1.10\spring-beans-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-webmvc\6.1.10\spring-webmvc-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-aop\6.1.10\spring-aop-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-context\6.1.10\spring-context-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-expression\6.1.10\spring-expression-6.1.10.jar;C:\Users\vivek\.m2\repository\org\postgresql\postgresql\42.7.3\postgresql-42.7.3.jar;C:\Users\vivek\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\vivek\.m2\repository\org\projectlombok\lombok\1.18.32\lombok-1.18.32.jar;C:\Users\vivek\.m2\repository\org\slf4j\slf4j-api\2.0.13\slf4j-api-2.0.13.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-core\6.1.10\spring-core-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-jcl\6.1.10\spring-jcl-6.1.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.3.3\lib\idea_rt.jar" dev.vivek.ProductService.ProductServiceApplication
+Connected to the target VM, address: '127.0.0.1:59242', transport: 'socket'
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2024-07-25T03:01:54.542+05:30  INFO 26272 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : Starting ProductServiceApplication using Java 17.0.5 with PID 26272 (C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject\ProductService\ProductService\target\classes started by vivek in C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject)
+2024-07-25T03:01:54.553+05:30  INFO 26272 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-07-25T03:01:58.532+05:30  INFO 26272 --- [ProductService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-25T03:01:58.556+05:30  INFO 26272 --- [ProductService] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-25T03:01:58.556+05:30  INFO 26272 --- [ProductService] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-25T03:01:58.705+05:30  INFO 26272 --- [ProductService] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-25T03:01:58.708+05:30  INFO 26272 --- [ProductService] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3993 ms
+2024-07-25T03:02:00.000+05:30  INFO 26272 --- [ProductService] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-07-25T03:02:00.168+05:30  INFO 26272 --- [ProductService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-07-25T03:02:00.209+05:30  INFO 26272 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : Started ProductServiceApplication in 6.858 seconds (process running for 7.861)
+
+Go to ProductController in controller package
+/product call - put debugger
+Go to postman
+GET - http://localhost:8080/product
+Output -
+[
+    {
+        "id": 1,
+        "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+        "price": 109.95,
+        "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+        "category": "men's clothing",
+        "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+        "rating": {
+            "rate": 3.9,
+            "count": 120
+        }
+    },
+    {
+        "id": 2,
+        "title": "Mens Casual Premium Slim Fit T-Shirts ",
+        "price": 22.3,
+        "description": "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
+        "category": "men's clothing",
+        "image": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
+        "rating": {
+            "rate": 4.1,
+            "count": 259
+        }
+    },
+    {
+        "id": 3,
+        "title": "Mens Cotton Jacket",
+        "price": 55.99,
+        "description": "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.",
+        "category": "men's clothing",
+        "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
+        "rating": {
+            "rate": 4.7,
+            "count": 500
+        }
+    },
+    {
+        "id": 4,
+        "title": "Mens Casual Slim Fit",
+        "price": 15.99,
+        "description": "The color could be slightly different between on the screen and in practice. / Please note that body builds vary by person, therefore, detailed size information should be reviewed below on the product description.",
+        "category": "men's clothing",
+        "image": "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
+        "rating": {
+            "rate": 2.1,
+            "count": 430
+        }
+    },
+    {
+        "id": 5,
+        "title": "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
+        "price": 695.0,
+        "description": "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
+        "category": "jewelery",
+        "image": "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+        "rating": {
+            "rate": 4.6,
+            "count": 400
+        }
+    },
+    {
+        "id": 6,
+        "title": "Solid Gold Petite Micropave ",
+        "price": 168.0,
+        "description": "Satisfaction Guaranteed. Return or exchange any order within 30 days.Designed and sold by Hafeez Center in the United States. Satisfaction Guaranteed. Return or exchange any order within 30 days.",
+        "category": "jewelery",
+        "image": "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_.jpg",
+        "rating": {
+            "rate": 3.9,
+            "count": 70
+        }
+    },
+    {
+        "id": 7,
+        "title": "White Gold Plated Princess",
+        "price": 9.99,
+        "description": "Classic Created Wedding Engagement Solitaire Diamond Promise Ring for Her. Gifts to spoil your love more for Engagement, Wedding, Anniversary, Valentine's Day...",
+        "category": "jewelery",
+        "image": "https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_.jpg",
+        "rating": {
+            "rate": 3.0,
+            "count": 400
+        }
+    },
+    {
+        "id": 8,
+        "title": "Pierced Owl Rose Gold Plated Stainless Steel Double",
+        "price": 10.99,
+        "description": "Rose Gold Plated Double Flared Tunnel Plug Earrings. Made of 316L Stainless Steel",
+        "category": "jewelery",
+        "image": "https://fakestoreapi.com/img/51UDEzMJVpL._AC_UL640_QL65_ML3_.jpg",
+        "rating": {
+            "rate": 1.9,
+            "count": 100
+        }
+    },
+    {
+        "id": 9,
+        "title": "WD 2TB Elements Portable External Hard Drive - USB 3.0 ",
+        "price": 64.0,
+        "description": "USB 3.0 and USB 2.0 Compatibility Fast data transfers Improve PC Performance High Capacity; Compatibility Formatted NTFS for Windows 10, Windows 8.1, Windows 7; Reformatting may be required for other operating systems; Compatibility may vary depending on user’s hardware configuration and operating system",
+        "category": "electronics",
+        "image": "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg",
+        "rating": {
+            "rate": 3.3,
+            "count": 203
+        }
+    },
+    {
+        "id": 10,
+        "title": "SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s",
+        "price": 109.0,
+        "description": "Easy upgrade for faster boot up, shutdown, application load and response (As compared to 5400 RPM SATA 2.5” hard drive; Based on published specifications and internal benchmarking tests using PCMark vantage scores) Boosts burst write performance, making it ideal for typical PC workloads The perfect balance of performance and reliability Read/write speeds of up to 535MB/s/450MB/s (Based on internal testing; Performance may vary depending upon drive capacity, host device, OS and application.)",
+        "category": "electronics",
+        "image": "https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg",
+        "rating": {
+            "rate": 2.9,
+            "count": 470
+        }
+    },
+    {
+        "id": 11,
+        "title": "Silicon Power 256GB SSD 3D NAND A55 SLC Cache Performance Boost SATA III 2.5",
+        "price": 109.0,
+        "description": "3D NAND flash are applied to deliver high transfer speeds Remarkable transfer speeds that enable faster bootup and improved overall system performance. The advanced SLC Cache Technology allows performance boost and longer lifespan 7mm slim design suitable for Ultrabooks and Ultra-slim notebooks. Supports TRIM command, Garbage Collection technology, RAID, and ECC (Error Checking & Correction) to provide the optimized performance and enhanced reliability.",
+        "category": "electronics",
+        "image": "https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg",
+        "rating": {
+            "rate": 4.8,
+            "count": 319
+        }
+    },
+    {
+        "id": 12,
+        "title": "WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive",
+        "price": 114.0,
+        "description": "Expand your PS4 gaming experience, Play anywhere Fast and easy, setup Sleek design with high capacity, 3-year manufacturer's limited warranty",
+        "category": "electronics",
+        "image": "https://fakestoreapi.com/img/61mtL65D4cL._AC_SX679_.jpg",
+        "rating": {
+            "rate": 4.8,
+            "count": 400
+        }
+    },
+    {
+        "id": 13,
+        "title": "Acer SB220Q bi 21.5 inches Full HD (1920 x 1080) IPS Ultra-Thin",
+        "price": 599.0,
+        "description": "21. 5 inches Full HD (1920 x 1080) widescreen IPS display And Radeon free Sync technology. No compatibility for VESA Mount Refresh Rate: 75Hz - Using HDMI port Zero-frame design | ultra-thin | 4ms response time | IPS panel Aspect ratio - 16: 9. Color Supported - 16. 7 million colors. Brightness - 250 nit Tilt angle -5 degree to 15 degree. Horizontal viewing angle-178 degree. Vertical viewing angle-178 degree 75 hertz",
+        "category": "electronics",
+        "image": "https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_.jpg",
+        "rating": {
+            "rate": 2.9,
+            "count": 250
+        }
+    },
+    {
+        "id": 14,
+        "title": "Samsung 49-Inch CHG90 144Hz Curved Gaming Monitor (LC49HG90DMNXZA) – Super Ultrawide Screen QLED ",
+        "price": 999.99,
+        "description": "49 INCH SUPER ULTRAWIDE 32:9 CURVED GAMING MONITOR with dual 27 inch screen side by side QUANTUM DOT (QLED) TECHNOLOGY, HDR support and factory calibration provides stunningly realistic and accurate color and contrast 144HZ HIGH REFRESH RATE and 1ms ultra fast response time work to eliminate motion blur, ghosting, and reduce input lag",
+        "category": "electronics",
+        "image": "https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg",
+        "rating": {
+            "rate": 2.2,
+            "count": 140
+        }
+    },
+    {
+        "id": 15,
+        "title": "BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats",
+        "price": 56.99,
+        "description": "Note:The Jackets is US standard size, Please choose size as your usual wear Material: 100% Polyester; Detachable Liner Fabric: Warm Fleece. Detachable Functional Liner: Skin Friendly, Lightweigt and Warm.Stand Collar Liner jacket, keep you warm in cold weather. Zippered Pockets: 2 Zippered Hand Pockets, 2 Zippered Pockets on Chest (enough to keep cards or keys)and 1 Hidden Pocket Inside.Zippered Hand Pockets and Hidden Pocket keep your things secure. Humanized Design: Adjustable and Detachable Hood and Adjustable cuff to prevent the wind and water,for a comfortable fit. 3 in 1 Detachable Design provide more convenience, you can separate the coat and inner as needed, or wear it together. It is suitable for different season and help you adapt to different climates",
+        "category": "women's clothing",
+        "image": "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg",
+        "rating": {
+            "rate": 2.6,
+            "count": 235
+        }
+    },
+    {
+        "id": 16,
+        "title": "Lock and Love Women's Removable Hooded Faux Leather Moto Biker Jacket",
+        "price": 29.95,
+        "description": "100% POLYURETHANE(shell) 100% POLYESTER(lining) 75% POLYESTER 25% COTTON (SWEATER), Faux leather material for style and comfort / 2 pockets of front, 2-For-One Hooded denim style faux leather jacket, Button detail on waist / Detail stitching at sides, HAND WASH ONLY / DO NOT BLEACH / LINE DRY / DO NOT IRON",
+        "category": "women's clothing",
+        "image": "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg",
+        "rating": {
+            "rate": 2.9,
+            "count": 340
+        }
+    },
+    {
+        "id": 17,
+        "title": "Rain Jacket Women Windbreaker Striped Climbing Raincoats",
+        "price": 39.99,
+        "description": "Lightweight perfet for trip or casual wear---Long sleeve with hooded, adjustable drawstring waist design. Button and zipper front closure raincoat, fully stripes Lined and The Raincoat has 2 side pockets are a good size to hold all kinds of things, it covers the hips, and the hood is generous but doesn't overdo it.Attached Cotton Lined Hood with Adjustable Drawstrings give it a real styled look.",
+        "category": "women's clothing",
+        "image": "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg",
+        "rating": {
+            "rate": 3.8,
+            "count": 679
+        }
+    },
+    {
+        "id": 18,
+        "title": "MBJ Women's Solid Short Sleeve Boat Neck V ",
+        "price": 9.85,
+        "description": "95% RAYON 5% SPANDEX, Made in USA or Imported, Do Not Bleach, Lightweight fabric with great stretch for comfort, Ribbed on sleeves and neckline / Double stitching on bottom hem",
+        "category": "women's clothing",
+        "image": "https://fakestoreapi.com/img/71z3kpMAYsL._AC_UY879_.jpg",
+        "rating": {
+            "rate": 4.7,
+            "count": 130
+        }
+    },
+    {
+        "id": 19,
+        "title": "Opna Women's Short Sleeve Moisture",
+        "price": 7.95,
+        "description": "100% Polyester, Machine wash, 100% cationic polyester interlock, Machine Wash & Pre Shrunk for a Great Fit, Lightweight, roomy and highly breathable with moisture wicking fabric which helps to keep moisture away, Soft Lightweight Fabric with comfortable V-neck collar and a slimmer fit, delivers a sleek, more feminine silhouette and Added Comfort",
+        "category": "women's clothing",
+        "image": "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg",
+        "rating": {
+            "rate": 4.5,
+            "count": 146
+        }
+    },
+    {
+        "id": 20,
+        "title": "DANVOUY Womens T Shirt Casual Cotton Short",
+        "price": 12.99,
+        "description": "95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.",
+        "category": "women's clothing",
+        "image": "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg",
+        "rating": {
+            "rate": 3.6,
+            "count": 145
+        }
+    }
+]
+
+
+Rest template is so smart it automatically created the particular type and it automaticallly fill the values and the rating object is also defined.
+
+/*
+restTemplate.getForEntity(fakeStoreGetAllProductURL, FakeStoreProductResponseDTO[].class);
+getForEntity(urlForAPI, the object in which you want the response)
+
+fakestore return back a json. Now whenever you return a json you are not going to
+deal with a string, you don't want to deal with json string you want an object.
+so you need to tell restTemplate.getForEntity() method that hey whatever response you
+get from fakestore convert that json into a particular object type - we have created
+FakeStoreProductResponseDTO by looking at the json of fakestore but the call is for
+all products it will return array of products.
+rest template does not support list. we get response in ResponseEntity with some http code
+*/
+
+
+
+
+
+
+
