@@ -1,0 +1,1043 @@
+
+Lecture 4 : Backend Projects: Handling Exceptions & Introduction to Spring Data JPA
+
+
+ Today's topic is very interesting topic exception handling and all.
+
+Agenda :
+
+We will do all the 3rd party calls  today for -
+Get
+Put
+Post
+Delete
+
+Handling exceptions - @ControllerAdvice
+Introduction to Spring Data JPA ( skip because flow will break )
+
+
+In intellij
+
+In ProductController class
+We did getAllProducts(). Now we will do specific product.
+@GetMapping("/product/{id}")
+public ResponseEntity getProductById(@PathVariable("id") int id) {
+
+}
+
+Then we will call our Service. Go to ProductService and here we already created the method
+Product getProduct(int productId);
+
+Go to ProductService implementation class
+getAllProducts() method will return List<FakeStoreProductResponseDTO> similarly
+getProduct(int productId) will also return a single FakeStoreProductResponseDTO
+
+public List<FakeStoreProductResponseDTO> getAllProducts() {
+   List<FakeStoreProductResponseDTO> fakeStoreProducts = fakeStoreClient.getAllProducts();
+   return fakeStoreProducts;
+}
+
+
+@Override
+public FakeStoreProductResponseDTO getProduct(int productId) {
+   return null;
+}
+
+In Product Service interface also
+FakeStoreProductResponseDTO getProduct(int productId);
+I want to build this in a better way like following the proper designs.
+
+Controller -> Input -> DTO, Output -> DTO, What would it send to Downstream (service) -> DTO. controller should only deal with DTO’s.
+
+So if controller is sending downstream dto then what will be the input for service layer is DTO obviously DTO, Output would also be DTO but what would it be sending downstream ?
+Entity
+Service -> Input -> DTO, Output -> DTO, What would it send to Downstream (Repository) -> Entity
+Service layer is the layer at which dto to entity or entity to dto conversion happens. why is this happens in this layer only ? why is the reason that the conversion of dto to entity or entity to dto is done at a service layer. Why service layer is responsible for that because at times choosing what to send and what not to send is kind of part of business logic (because conversion can be part of business logic).
+For ex -  if you go to websites where you see data for ex - the website called statistica, katlas - these are some websites which are survey like data website like you can go there and download data. Like you can find data for multiple things like watch industry, computer industry, income, income tax, govt, etc. basically data if you want to do research these are the companies which have data like they sell data now what happens if you buy their different different plans right If you are free then they will give you probably let say i want to know about maps or let say watches - how much watches are sold in india, what kind of watches are sold in india, what is the price, what is the volume, what is the different types, what are the different brands, there can be x no of factors.
+So let say in free it might only show you 3 data points , if you are on general plan it might show you 5 data points, but if you are on a pro plan then it might show you 10 data points. So what exactly it wants to show on the UI it depends on the plan that you have which is exactly the part of business logic so which DTO I will convert it back to what kind of response I’ll give back to the User that will completely depend on the plan that you have. Hence the conversion from Entity to DTO becomes the part of your business logic. Hence it comes at the service layer.
+
+Statistica -> free plan - 3 data points, general plan - 5 data points, pro plan - 10 data points
+Katlas
+
+Prateek Kumar
+To: Everyone
+9:21 PM
+so now will we use this flow in our practice?
+yes
+
+Ashish Yadav
+To: Everyone
+9:18 PM
+sir, what should we pass to DAAS?
+Don’t say DAAS because it is very specific. Say client because client is calling 3rd party.
+
+Repository -> Input -> Entity, Output -> Entity, There is no Downstream in Repository (DB saves Entity only)
+
+Client -> Input -> Entity, Output -> Entity, Everything is DTO
+Because client will always deal in DTO’s.
+
+Vanapalli Tarun
+To: Everyone
+9:21 PM
+again please, I didnt follow the line of logic here
+Controller layer only deal with dto’s. Previously what we are doing is that the controller layer was calling a Mapper and converting the Entity to DTO and DTO to Entity. Now controller layer will not know anything about Entity it will only deal with DTO’s. It will take input as DTO. It will the send same DTO to Service layer. It will output back to the user as DTO. Service layer will take the input as a DTO from controller but will send Repository an Entity. So the conversion either you call a Mapper class or you write the code in Service layer itself. The Service layer will be responsible for converting the DTO to Entity while input at the same time for output Entity to DTO because conversion can be part of business logic and Service layer as you know handles the business logic so conversion as well go inside the service layer. Now code might be in service layer or code might be in some Mapper class but calling that Mapper class would be done from Service layer. The execution and calling the code from service layer.
+
+
+Go to FakeStoreProductServiceImpl Service layer and check getProduct(int id) method return type(output) whether it is DTO or not (FakeStoreProductResponseDTO)
+And no input as DTO
+@Override
+public FakeStoreProductResponseDTO getProduct(int productId) {
+   return null;
+}
+
+Go to controller layer   ProductController
+@GetMapping("/product/{id}")
+public ResponseEntity getProductById(@PathVariable("id") int id) {
+   FakeStoreProductResponseDTO product = productService.getProduct(id);
+   return ResponseEntity.ok(product);
+}
+
+
+Repository deal with Entity only and client class always deal with DTO’s
+
+Go to client class FakeStoreClient
+public FakeStoreProductResponseDTO getProductById(int id) {
+   // 1st thing - build the URL (https://fakestoreapi.com/products/id
+   String fakeStoreGetProductURL = fakeStoreAPIBaseUrl.concat(fakeStoreAPIProductPath).concat("/" + id);
+   RestTemplate restTemplate = restTemplateBuilder.build();
+   ResponseEntity<FakeStoreProductResponseDTO> productResponse =
+           restTemplate.getForEntity(fakeStoreGetProductURL, FakeStoreProductResponseDTO.class);
+   return productResponse.getBody();
+}
+
+
+Redirecting the call to a particular method is done by dispatcher servlet.
+dispatcher servlet stores the mapping in handler mapping.
+
+@Override
+public FakeStoreProductResponseDTO getProduct(int productId) {
+   FakeStoreProductResponseDTO fakeStoreProductResponseDTO = fakeStoreClient.getProductById(productId);
+   return fakeStoreProductResponseDTO;
+}
+
+"C:\Program Files\Java\jdk-17.0.5\bin\java.exe" -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:64293,suspend=y,server=n -javaagent:C:\Users\vivek\AppData\Local\JetBrains\IdeaIC2023.3\captureAgent\debugger-agent.jar -Dfile.encoding=UTF-8 -classpath "C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject\ProductService\ProductService\target\classes;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.3.1\spring-boot-starter-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter\3.3.1\spring-boot-starter-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot\3.3.1\spring-boot-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.3.1\spring-boot-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.3.1\spring-boot-starter-logging-3.3.1.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-classic\1.5.6\logback-classic-1.5.6.jar;C:\Users\vivek\.m2\repository\ch\qos\logback\logback-core\1.5.6\logback-core-1.5.6.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.23.1\log4j-to-slf4j-2.23.1.jar;C:\Users\vivek\.m2\repository\org\apache\logging\log4j\log4j-api\2.23.1\log4j-api-2.23.1.jar;C:\Users\vivek\.m2\repository\org\slf4j\jul-to-slf4j\2.0.13\jul-to-slf4j-2.0.13.jar;C:\Users\vivek\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\vivek\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.3.1\spring-boot-actuator-autoconfigure-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-actuator\3.3.1\spring-boot-actuator-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.17.1\jackson-databind-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.17.1\jackson-annotations-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.17.1\jackson-core-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.17.1\jackson-datatype-jsr310-2.17.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-observation\1.13.1\micrometer-observation-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-commons\1.13.1\micrometer-commons-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-jakarta9\1.13.1\micrometer-jakarta9-1.13.1.jar;C:\Users\vivek\.m2\repository\io\micrometer\micrometer-core\1.13.1\micrometer-core-1.13.1.jar;C:\Users\vivek\.m2\repository\org\hdrhistogram\HdrHistogram\2.2.2\HdrHistogram-2.2.2.jar;C:\Users\vivek\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.3.1\spring-boot-starter-web-3.3.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.3.1\spring-boot-starter-json-3.3.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.17.1\jackson-datatype-jdk8-2.17.1.jar;C:\Users\vivek\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.17.1\jackson-module-parameter-names-2.17.1.jar;C:\Users\vivek\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.3.1\spring-boot-starter-tomcat-3.3.1.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.25\tomcat-embed-core-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.25\tomcat-embed-el-10.1.25.jar;C:\Users\vivek\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.25\tomcat-embed-websocket-10.1.25.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-web\6.1.10\spring-web-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-beans\6.1.10\spring-beans-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-webmvc\6.1.10\spring-webmvc-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-aop\6.1.10\spring-aop-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-context\6.1.10\spring-context-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-expression\6.1.10\spring-expression-6.1.10.jar;C:\Users\vivek\.m2\repository\org\postgresql\postgresql\42.7.3\postgresql-42.7.3.jar;C:\Users\vivek\.m2\repository\org\checkerframework\checker-qual\3.42.0\checker-qual-3.42.0.jar;C:\Users\vivek\.m2\repository\org\projectlombok\lombok\1.18.32\lombok-1.18.32.jar;C:\Users\vivek\.m2\repository\org\slf4j\slf4j-api\2.0.13\slf4j-api-2.0.13.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-core\6.1.10\spring-core-6.1.10.jar;C:\Users\vivek\.m2\repository\org\springframework\spring-jcl\6.1.10\spring-jcl-6.1.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.3.3\lib\idea_rt.jar" dev.vivek.ProductService.ProductServiceApplication
+Connected to the target VM, address: '127.0.0.1:64293', transport: 'socket'
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2024-07-27T22:48:26.581+05:30  INFO 24008 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : Starting ProductServiceApplication using Java 17.0.5 with PID 24008 (C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject\ProductService\ProductService\target\classes started by vivek in C:\Users\vivek\OneDrive\Desktop\Scaler\Backend LLD-4 E-com Project Module\E-comBackendProject)
+2024-07-27T22:48:26.589+05:30  INFO 24008 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : No active profile set, falling back to 1 default profile: "default"
+2024-07-27T22:48:29.036+05:30  INFO 24008 --- [ProductService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-07-27T22:48:29.060+05:30  INFO 24008 --- [ProductService] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-27T22:48:29.060+05:30  INFO 24008 --- [ProductService] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-27T22:48:29.310+05:30  INFO 24008 --- [ProductService] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-27T22:48:29.313+05:30  INFO 24008 --- [ProductService] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2614 ms
+2024-07-27T22:48:30.845+05:30  INFO 24008 --- [ProductService] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-07-27T22:48:31.063+05:30  INFO 24008 --- [ProductService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-07-27T22:48:31.130+05:30  INFO 24008 --- [ProductService] [           main] d.v.P.ProductServiceApplication          : Started ProductServiceApplication in 5.297 seconds (process running for 6.089)
+2024-07-27T22:48:51.907+05:30  INFO 24008 --- [ProductService] [nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-27T22:48:51.907+05:30  INFO 24008 --- [ProductService] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-27T22:48:51.913+05:30  INFO 24008 --- [ProductService] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+
+
+In Postman
+GET : http://localhost:8080/product/1
+
+{
+    "id": 1,
+    "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    "price": 109.95,
+    "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    "category": "men's clothing",
+    "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    "rating": {
+        "rate": 3.9,
+        "count": 120
+    }
+}
+
+In Postman
+GET : http://localhost:8080/product/21
+Fakestore only contain products till 20 but what happens when we are trying to get product which is not present ? (we are trying to get product with id = 21). If you remember in previous projects when we are trying to get game, ticket, show, parking lot we are throwing exceptions.
+
+GET : http://localhost:8080/product/21
+Output : empty
+Is it a good idea o get an empty object. You should show na that you don’t have the data. You should throw an error.
+
+Error handling :
+GET : http://localhost:8080/product/21
+Let’s see what happens in the code by debugging getProductById(int id)
+
+Body of Response body is null in FakeStoreClient class (thow exception in service)
+
+Go to service class
+@Override
+public FakeStoreProductResponseDTO getProduct(int productId) throws ProductNotFoundException {
+   FakeStoreProductResponseDTO fakeStoreProductResponseDTO = fakeStoreClient.getProductById(productId);
+   if(fakeStoreProductResponseDTO == null) {
+       // you should not throw generic exception rather you should throw custom exception
+       throw new RuntimeException("Product not found with id : " + productId);
+   }
+   return fakeStoreProductResponseDTO;
+}
+
+
+
+
+
+you should not throw generic exception rather you should throw custom exception for that
+Create exception package in that create ProductNotFoundException class
+package dev.vivek.ProductService.exception;
+
+
+public class ProductNotFoundException extends RuntimeException{
+   public ProductNotFoundException() {
+   }
+
+
+   public ProductNotFoundException(String message) {
+       super(message);
+   }
+
+
+   public ProductNotFoundException(String message, Throwable cause) {
+       super(message, cause);
+   }
+
+
+   public ProductNotFoundException(Throwable cause) {
+       super(cause);
+   }
+
+
+   public ProductNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+       super(message, cause, enableSuppression, writableStackTrace);
+   }
+}
+
+
+Prateek Kumar
+To: Everyone
+9:36 PM
+can we use here optional ?
+We should show it to user na. It’s not a scenario of handling the null pointer or null case It’s a
+scenario of giving the exact response to the user.
+We will not use try catch here
+
+Ashish Kumar
+To: Everyone
+9:36 PM
+diff b/w runtime exception and exception?
+In module 4 i will not give ans of this
+
+In Product Service Interface
+FakeStoreProductResponseDTO getProduct(int productId) throws ProductNotFoundException;
+
+
+GET - http://localhost:8080/product/21
+Output - {
+    "timestamp": "2024-07-28T09:57:09.627+00:00",
+    "status": 500,
+    "error": "Internal Server Error",
+    "path": "/product/21"
+}
+Because the server is crashed and so server is not giving any appropriate response.
+
+We are not handling the exception anywhere rather we just throwing exception in service class.
+Generally whenever you handle the exception in the sense that respond back to the client with some specific format. You try to maintain everything at one place You don't specifically write things in one place. You should not write exception handling try catch Somewhere throws somewhere try catch Handling Somewhere in one way handling  somewhere in some other way That is not the correct idea. The correct idea should be the Handling of error or exceptions  Should be properly done  with a specific format for the entire application. So You don't handle with  try Catch at Controller layer all service layer or anywhere We write a separate piece of code Completely separate Where the exception is being handled That is called controller advice. We will use something called as global Exception Handler. This will also go inside a exception package.
+package dev.vivek.ProductService.exception;
+
+
+import org.springframework.web.bind.annotation.ControllerAdvice;
+
+
+@ControllerAdvice
+public class ExceptionHandler {
+}
+
+
+@ControllerAdvice - Advice in the sense that If your controller Tries to throw An exception Then this thing will give an advice To the controller that hey Don't do what you want to do, Do as per the configuration Do as per the developer wants It's an advise to the controller. The Idea is basically that when controller wants to throw an exception controller advice is what it follows.
+
+
+Now we will write always make sure That you Are using a specific structure for responding back With your exceptions So for that I will create One more dto called ExceptionResponseDTO
+Inside this dto i will put 2 important things message and code
+package dev.vivek.ProductService.dto;
+
+
+import lombok.Getter;
+import lombok.Setter;
+
+
+@Getter
+@Setter
+public class ExceptionResponseDTO {
+   private String message;
+   private int code;
+
+
+   public ExceptionResponseDTO(String message, int code) {
+       this.message = message;
+       this.code = code;
+   }
+}
+
+
+So whenever you handle an exception This is the response structure That you need to follow. Generally this is the same structure Followed across the companies.
+
+Code means // error code, http code etc.
+
+Prateek Kumar
+To: Everyone
+9:43 PM
+ControllerAdvice is an controller, is it not a part of a controller package
+No ControllerAdvice is nowhere handling api’s and accepting the request.
+ControllerAdvice basically tells The controller that How to handle the exceptions.
+
+Vanapalli Tarun
+To: Everyone
+9:43 PM
+but why do we need to create a DTO of exception, how does it help?/
+
+In ExceptionHandler class rename to ProductExceptionHandler
+We will write a method called handleProductNotFoundException()
+
+Now how would your code know that this is the method that needs to be looked into whenever ProductNotFoundException is thrown ?
+For that we will simply write one line of annotation so that this method is the Exception Handler for ProductNotFoundException.
+@ExceptionHandler(which exception it needs to handle(ProductNotFoundException.class))
+package dev.vivek.ProductService.exception;
+
+
+import dev.vivek.ProductService.dto.ExceptionResponseDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+
+
+@ControllerAdvice
+public class ProductServiceExceptionHandler {
+
+
+@ExceptionHandler(ProductNotFoundException.class)
+   public ResponseEntity handleProductNotFoundException(ProductNotFoundException productNotFoundException) {
+       ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+               productNotFoundException.getMessage(),
+               404
+       );
+       // for not found the code is 404
+       return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.NOT_FOUND);
+   }
+}
+
+GET - http://localhost:8080/product/21
+{
+    "message": "Product not found with id : 21",
+    "code": 404
+}
+Before call reaches back to controller @ControllerAdvice class return back a response if exception is thrown with the help of dto.
+
+
+Discussion of this flow
+
+
+Q-1 Sandeep what if the exception that i am throwing And the exception that the Handler is accepting Are not same Then what happens ?
+Ans - for ex-
+
+Let say i will create a generic exception here  NoProductPresentException
+package dev.vivek.ProductService.exception;
+
+
+public class NoProductPresentException extends RuntimeException{
+   public NoProductPresentException() {
+   }
+
+
+   public NoProductPresentException(String message) {
+       super(message);
+   }
+
+
+   public NoProductPresentException(String message, Throwable cause) {
+       super(message, cause);
+   }
+
+
+   public NoProductPresentException(Throwable cause) {
+       super(cause);
+   }
+
+
+   public NoProductPresentException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+       super(message, cause, enableSuppression, writableStackTrace);
+   }
+}
+
+We are throwing ProductNotFoundException from our service class
+throw new ProductNotFoundException("Product not found with id : " + productId);
+
+In handler hear Inside instead of handling ProductNotFoundException I will write NoProductPresentException
+@ExceptionHandler(NoProductPresentException.class)
+
+@ExceptionHandler(NoProductPresentException.class)
+public ResponseEntity handleProductNotFoundException(ProductNotFoundException productNotFoundException) {
+   ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+           productNotFoundException.getMessage(),
+           404
+   );
+   // for not found the code is 404
+   return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.NOT_FOUND);
+}
+
+Will the call come here ? will this method handle ProductNotFoundException which is being thrown ? No The call not reach to the Exception handler.
+
+GET - http://localhost:8080/product/21
+{
+    "timestamp": "2024-07-28T13:21:52.479+00:00",
+    "status": 500,
+    "error": "Internal Server Error",
+    "path": "/product/21"
+}
+
+
+500 INTERNAL SERVER ERROR
+
+
+We are not getting proper message and proper code.
+
+
+Raman bansal
+To: Everyone
+9:53 PM
+why we are getting 500
+If exception is thrown but you didn’t handle it and spring does not know how to handle this exception so spring gives Something went wrong internally - spring is throwing generic 500 error
+
+
+Q-2 now if two of the methods getAllProducts() method is throwing NoProductPresentException and getProduct(int id) method is throwing ProductNotFoundException so there are two different exception is being thrown so if two different exception is being thrown then we should have two controller like handler methods
+
+@ExceptionHandler(ProductNotFoundException.class)
+public ResponseEntity handleProductNotFoundException(ProductNotFoundException productNotFoundException) {
+   ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+           productNotFoundException.getMessage(),
+           404
+   );
+   // for not found the code is 404
+   return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.NOT_FOUND);
+}
+
+
+@ExceptionHandler(NoProductPresentException.class)
+public ResponseEntity handleProductNotFoundException(NoProductPresentException noProductPresentException) {
+   ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+           noProductPresentException.getMessage(),
+           404
+   );
+   // for not found the code is 404
+   return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.NOT_FOUND);
+}
+
+GET - http://localhost:8080/product/21
+{
+    "message": "Product not found with id : 21",
+    "code": 404
+}
+
+Doubts -
+Saidul
+To: Everyone
+9:58 PM
+for some methods in controller we do the dto data validation in controller before calling service eg user sign up email is invalid where do we do such validation and how should we handle error?
+
+In controller getProductById(int id) method
+if(id < 1) {
+	Throw new InvalidInputException(“The input is invalid”);
+}
+public class InvalidInputException extends RuntimeException{
+
+
+   public InvalidInputException() {
+   }
+
+
+   public InvalidInputException(String message) {
+       super(message);
+   }
+
+
+   public InvalidInputException(String message, Throwable cause) {
+       super(message, cause);
+   }
+
+
+   public InvalidInputException(Throwable cause) {
+       super(cause);
+   }
+
+
+   public InvalidInputException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+       super(message, cause, enableSuppression, writableStackTrace);
+   }
+}
+
+@GetMapping("/product/{id}")
+public ResponseEntity getProductById(@PathVariable("id") int id) {
+   if(id < 1) {
+       throw new InvalidInputException("Input is not correct");
+   }
+   FakeStoreProductResponseDTO product = productService.getProduct(id);
+   return ResponseEntity.ok(product);
+}
+
+
+And in controller advice
+@ExceptionHandler(InvalidInputException.class) // exception at controller is thrown
+public ResponseEntity handleInvalidInputException(InvalidInputException invalidInputException) {
+   ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+           invalidInputException.getMessage(),
+           400
+   );
+   // if it is invalid input then it is bad request the code is 400
+   return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.BAD_REQUEST);
+}
+
+
+ExceptionResponseDTO should remain the similar structure so that the frontend Can always expect The same format for All errors. So frontend will not change the InPut format for your exception. So you keep this structure similar  the message and the code etc that you can change but try To keep this structure until or unless  it is Not very specifically Required to make different dto’s don’t make it. So that it is easier for the front end to implement. They don’t need to handle multiple other dto’s they just handle one dto for all exceptions.
+
+Raman bansal
+To: Everyone
+9:58 PM
+if we extends exception rather than runtime it will be more use full as we are writing throws
+Custom exceptions are only happens when the code runs and something goes wrong hence it should only implement run time exception not exception
+
+Ashish Kumar
+To: Everyone
+9:58 PM
+We have a exception called ProductNotFoundException then in controller, this exception can be thrown if we don't use @controllerAdvice.
+This will not work because we are just throwing the exception but we are not handling it because we are not using controller advice annotation and we get an error called internal server error 500.
+
+
+
+For both these methods the body is exactly the same so we can andle both exceptions in a single method. So we change the method name of one of them as generic for both the exception and in @Exceptionhandler(we pass both the classes). Both the exception is handled by single method.
+@ExceptionHandler(ProductNotFoundException.class)
+public ResponseEntity handleProductNotFoundException(ProductNotFoundException productNotFoundException) {
+   ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+           productNotFoundException.getMessage(),
+           404
+   );
+   // for not found the code is 404
+   return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.NOT_FOUND);
+}
+
+
+@ExceptionHandler(NoProductPresentException.class)
+public ResponseEntity handleProductNotFoundException(NoProductPresentException noProductPresentException) {
+   ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+           noProductPresentException.getMessage(),
+           404
+   );
+   // for not found the code is 404
+   return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.NOT_FOUND);
+}
+
+
+
+@ExceptionHandler({ProductNotFoundException.class, NoProductPresentException.class})
+public ResponseEntity handleNoProductException(ProductNotFoundException productNotFoundException) {
+   ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+           productNotFoundException.getMessage(),
+           404
+   );
+   // for not found the code is 404
+   return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.NOT_FOUND);
+}
+
+Compile time exception sould always fails and they should never be handled because i can fix it during the build itself.
+
+Ashish Yadav
+To: Everyone
+10:06 PM
+can we have multiple @controlleradvice class?
+
+
+
+
+sumedhkashte
+To: Everyone
+10:14 PM
+so when to use try catch block if we are handling through custom exception
+
+Vinaykumar J
+To: Everyone
+10:15 PM
+So in springboot we will never use try catch?
+We do vinay Even if we use try catch Inside catch will again throw exception. I will discuss this when time comes.
+
+package dev.vivek.ProductService.entity;
+
+
+public class Category {
+
+
+}
+
+
+
+
+
+
+
+
+Multiple Controllers Exception Handler
+
+CartController for showing something we don’t creating service class for now.
+
+package dev.vivek.ProductService.controller;
+
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+
+@RestController
+public class CartController {
+
+
+   @GetMapping("/cart/{userId}")
+   public ResponseEntity getCartForUser(@PathVariable("userId") int userId) {
+
+   }
+}
+
+In fakestore client class
+
+
+
+
+
+In application.properties
+
+#fakestore.api.cart.path = /carts
+#you can also do one thing that you want specific thing or specific url for
+# this use case I will just do
+fakestore.api.cart.for.user.path = /carts?userId=
+
+
+public FakeStoreProductResponseDTO getCartByUserId(int userId) {
+   // 1st thing - build the URL (https://fakestoreapi.com/carts?userId=1)
+   String fakeStoreGetCartForUserURL = fakeStoreAPIBaseUrl.concat(fakeStoreAPICartForUser).concat(String.valueOf(userId));
+   RestTemplate restTemplate = restTemplateBuilder.build();
+   // we have to create separate dto for this
+   ResponseEntity<FakeStoreProductResponseDTO> productResponse =
+           restTemplate.getForEntity(fakeStoreGetProductURL, FakeStoreProductResponseDTO.class);
+   return productResponse.getBody();
+}
+
+
+
+[
+ {
+   "id": 1,
+   "userId": 1,
+   "date": "2020-03-02T00:00:00.000Z",
+   "products": [
+     {
+       "productId": 1,
+       "quantity": 4
+     },
+     {
+       "productId": 2,
+       "quantity": 1
+     },
+     {
+       "productId": 3,
+       "quantity": 6
+     }
+   ],
+   "__v": 0
+ },
+
+   we have to create dto for this
+public class FakeStoreCartResponseDTO {
+   private int id;
+   private int userId;
+   private String date;
+   private List<ProductQuantityDTO> products;
+   private int __v; // some version
+}
+
+@Getter
+@Setter
+public class ProductQuantityDTO {
+   private int productId;
+   private int quantity;
+}
+
+
+
+public List<FakeStoreCartResponseDTO> getCartByUserId(int userId) {
+   // 1st thing - build the URL (https://fakestoreapi.com/carts?userId=1)
+   String fakeStoreGetCartForUserURL = fakeStoreAPIBaseUrl.concat(fakeStoreAPICartForUser).concat(String.valueOf(userId));
+   RestTemplate restTemplate = restTemplateBuilder.build();
+   // we have to create separate dto for this
+   ResponseEntity<FakeStoreCartResponseDTO[]> cartResponse =
+           restTemplate.getForEntity(fakeStoreGetCartForUserURL, FakeStoreCartResponseDTO[].class);
+   return List.of(cartResponse.getBody());
+}
+
+
+GET - http://localhost:8080/cart/1
+{
+    "timestamp": "2024-07-28T17:53:00.443+00:00",
+    "status": 500,
+    "error": "Internal Server Error",
+    "path": "/cart/1"
+}
+
+Error -  com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class dev.vivek.ProductService.dto.FakeStoreCartResponseDTO and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: java.util.ImmutableCollections$ListN[0])
+
+(Jackson is for serialization and deserialization)
+This is why because in FakeStoreCartResponseDTO all the attributes are private if i don’t give public getter and setter jackson will not be able to do the conversion from object to json string or vice versa.
+
+GET - http://localhost:8080/cart/1
+
+[
+    {
+        "id": 1,
+        "userId": 1,
+        "date": "2020-03-02T00:00:00.000Z",
+        "products": [
+            {
+                "productId": 1,
+                "quantity": 4
+            },
+            {
+                "productId": 2,
+                "quantity": 1
+            },
+            {
+                "productId": 3,
+                "quantity": 6
+            }
+        ],
+        "__v": 0
+    },
+    {
+        "id": 2,
+        "userId": 1,
+        "date": "2020-01-02T00:00:00.000Z",
+        "products": [
+            {
+                "productId": 2,
+                "quantity": 4
+            },
+            {
+                "productId": 1,
+                "quantity": 10
+            },
+            {
+                "productId": 5,
+                "quantity": 2
+            }
+        ],
+        "__v": 0
+    },
+    {
+        "id": 3,
+        "userId": 2,
+        "date": "2020-03-01T00:00:00.000Z",
+        "products": [
+            {
+                "productId": 1,
+                "quantity": 2
+            },
+            {
+                "productId": 9,
+                "quantity": 1
+            }
+        ],
+        "__v": 0
+    },
+    {
+        "id": 4,
+        "userId": 3,
+        "date": "2020-01-01T00:00:00.000Z",
+        "products": [
+            {
+                "productId": 1,
+                "quantity": 4
+            }
+        ],
+        "__v": 0
+    },
+    {
+        "id": 5,
+        "userId": 3,
+        "date": "2020-03-01T00:00:00.000Z",
+        "products": [
+            {
+                "productId": 7,
+                "quantity": 1
+            },
+            {
+                "productId": 8,
+                "quantity": 1
+            }
+        ],
+        "__v": 0
+    },
+    {
+        "id": 6,
+        "userId": 4,
+        "date": "2020-03-01T00:00:00.000Z",
+        "products": [
+            {
+                "productId": 10,
+                "quantity": 2
+            },
+            {
+                "productId": 12,
+                "quantity": 3
+            }
+        ],
+        "__v": 0
+    },
+    {
+        "id": 7,
+        "userId": 8,
+        "date": "2020-03-01T00:00:00.000Z",
+        "products": [
+            {
+                "productId": 18,
+                "quantity": 1
+            }
+        ],
+        "__v": 0
+    }
+]
+
+
+public List<FakeStoreCartResponseDTO> getCartByUserId(int userId) {
+   if(userId < 1) {
+       return null;
+   }
+   // 1st thing - build the URL (https://fakestoreapi.com/carts?userId=1)
+   String fakeStoreGetCartForUserURL = fakeStoreAPIBaseUrl.concat(fakeStoreAPICartForUser).concat(String.valueOf(userId));
+   RestTemplate restTemplate = restTemplateBuilder.build();
+   // we have to create separate dto for this
+   ResponseEntity<FakeStoreCartResponseDTO[]> cartResponse =
+           restTemplate.getForEntity(fakeStoreGetCartForUserURL, FakeStoreCartResponseDTO[].class);
+   return List.of(cartResponse.getBody());
+}
+
+
+
+GET http://localhost:8080/cart/-1
+{
+    "timestamp": "2024-07-28T18:22:22.558+00:00",
+    "status": 500,
+    "error": "Internal Server Error",
+    "path": "/cart/-1"
+}
+We are throwing CartNotFoundException but we are not handling it. Internal Server Error BECAUSE WE DIDn’t handle exception in controller advice
+
+
+There are two ways to handle it :
+You write another method in handler class - this is totally do able for smaller project when you have very few methods and controllers are one or two it is ok to maintain single controller advice class
+(Small project, with few controller and fewer methods, single controller advice class is ok).
+but imagine if you have multiple controllers, huge no of methods in that case you should not have single controller advice
+(For bigger projects, we should have controller specific controller advice classes).
+package dev.vivek.ProductService.exception;
+
+
+import dev.vivek.ProductService.dto.ExceptionResponseDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+
+@ControllerAdvice
+public class ProductServiceExceptionHandler {
+
+
+   @ExceptionHandler({ProductNotFoundException.class, NoProductPresentException.class})
+   public ResponseEntity handleNoProductException(ProductNotFoundException productNotFoundException) {
+       ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+               productNotFoundException.getMessage(),
+               404
+       );
+       // for not found the code is 404
+       return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.NOT_FOUND);
+   }
+
+
+
+
+   @ExceptionHandler(InvalidInputException.class) // exception at controller is thrown
+   public ResponseEntity handleInvalidInputException(InvalidInputException invalidInputException) {
+       ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+               invalidInputException.getMessage(),
+               400
+       );
+       // if it is invalid input then it is bad request the code is 400
+       return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.BAD_REQUEST);
+   }
+
+
+   @ExceptionHandler(CartNotFoundException.class) // exception at controller is thrown
+   public ResponseEntity handleCartNotFoundException(CartNotFoundException cartNotFoundException) {
+       ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+               cartNotFoundException.getMessage(),
+               404
+       );
+       // if it is invalid input then it is bad request the code is 400
+       return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.NOT_FOUND);
+   }
+
+
+}
+
+
+
+
+Now for my CartController I will not write the code inside the same handler instead i will create one more class called CartControllerExceptionHandler
+But how will spring knows it would not understand from the name (CartControllerExceptionHandler) that this controller advice class is for CartController. We have to specify. For specification we have write @ControllerAdvice(basePackageClasses = CartController.class)
+
+
+package dev.vivek.ProductService.exception;
+
+
+import dev.vivek.ProductService.controller.CartController;
+import dev.vivek.ProductService.dto.ExceptionResponseDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+
+@ControllerAdvice(basePackageClasses = CartController.class)
+public class CartControllerExceptionHandler {
+   @ExceptionHandler(CartNotFoundException.class) // exception at controller is thrown
+   public ResponseEntity handleCartNotFoundException(CartNotFoundException cartNotFoundException) {
+       ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+               cartNotFoundException.getMessage(),
+               404
+       );
+       // if it is invalid input then it is bad request the code is 400
+       return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.NOT_FOUND);
+   }
+}
+
+
+Similarly for product i will rename this class name ProductService to ProductController
+
+
+HW ->
+Create 2 APIs, 1 in product controller, 1 in cart controller
+make both of them return same custom exception
+add 2 handler methods in each advice classes for that exception, and check
+the code flow
+
+
+Common Custom Exception
+package dev.vivek.ProductService.exception;
+
+
+public class InvalidInputException extends RuntimeException{
+
+
+   public InvalidInputException(String message) {
+       super(message);
+   }
+
+
+}
+
+
+In ProductController
+//  HOMEWORK
+@Autowired
+FakeStoreClient fakeStoreClient;
+
+
+@GetMapping("/product/{productId}")  // Homework api
+public ResponseEntity getProductId(@PathVariable("productId") int productId) {
+   if(productId < 1) {
+       throw new InvalidInputException("Homework : Input is invalid for Product");
+   }
+   FakeStoreProductResponseDTO product = fakeStoreClient.getProductById(productId);
+   return ResponseEntity.ok(product);
+}
+
+
+In CartController
+// HOMEWORK
+
+
+@GetMapping("/cart/{userId}")    // we are not creating any service class for this
+public ResponseEntity getCartForUser(@PathVariable("userId") int userId) {
+   if(userId < 1) {
+       throw new InvalidInputException("Homework : Input is invalid for Cart");
+   }
+   List<FakeStoreCartResponseDTO> cartResponse =
+           fakeStoreClient.getCartByUserId(userId);
+   if(cartResponse == null) {
+       throw new CartNotFoundException("Cart not found for userId " + userId);
+   }
+   return ResponseEntity.ok(cartResponse);
+}
+
+
+In ProductControllerExceptionHandler or ControllerAdvice
+@ExceptionHandler(InvalidInputException.class) // exception at controller is thrown
+public ResponseEntity handleProductControllerInvalidInputExceptionHomework(InvalidInputException invalidInputException) {
+   ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+           invalidInputException.getMessage(),
+           400
+   );
+   // if it is invalid input then it is bad request the code is 400
+   return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.BAD_REQUEST);
+}
+
+
+In CartControllerExceptionHandler or ControllerAdvice
+// HOMEWORK
+@ExceptionHandler(InvalidInputException.class) // exception at controller is thrown
+public ResponseEntity handleCartControllerInvalidInputExceptionHomework(InvalidInputException invalidInputException) {
+   ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(
+           invalidInputException.getMessage(),
+           400
+   );
+   // if it is invalid input then it is bad request the code is 400
+   return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.BAD_REQUEST);
+}
+
+
+GET - http://localhost:8080/product/-1
+{
+    "message": "Homework : Input is invalid for Product",
+    "code": 400
+}
+
+
+
+
+GET - http://localhost:8080/cart/-1
+{
+    "message": "Homework : Input is invalid for Cart",
+    "code": 400
+}
+
+
+
+
+DOUBT IN HOMEWORK - jab mein yeh url  http://localhost:8080/product/-1 hit kar raha hun toh pehle call gayi ProductController ke pass uske baad call ProductControllerExceptionHandler ke andar exception handler method ke pass call nhi jaa rahi uski jagah pe call jaa rahi hai CartControllerExceptionHandler ke method ke pass aisa kyun ho raha hai.
+
+

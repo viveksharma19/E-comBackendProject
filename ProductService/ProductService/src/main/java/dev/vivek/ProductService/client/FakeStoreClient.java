@@ -1,5 +1,6 @@
 package dev.vivek.ProductService.client;
 
+import dev.vivek.ProductService.dto.FakeStoreCartResponseDTO;
 import dev.vivek.ProductService.dto.FakeStoreProductResponseDTO;
 import dev.vivek.ProductService.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class FakeStoreClient {
     private String fakeStoreAPIBaseUrl;
     @Value("${fakestore.api.product.path}")
     private String fakeStoreAPIProductPath; // Path to the product Api
+    @Value("${fakestore.api.cart.for.user.path}")
+    private String fakeStoreAPICartForUser; // Path to the cart for user Api
 
     public List<FakeStoreProductResponseDTO> getAllProducts() {
         /* Now here When you call getAllProducts(), it should return back a response. what should it return ? should it return Product
@@ -41,6 +44,29 @@ public class FakeStoreClient {
         return List.of(productResponseList.getBody());
 
     }
+
+    public FakeStoreProductResponseDTO getProductById(int id) {
+        // 1st thing - build the URL (https://fakestoreapi.com/products/id)
+        String fakeStoreGetProductURL = fakeStoreAPIBaseUrl.concat(fakeStoreAPIProductPath).concat("/" + id);
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<FakeStoreProductResponseDTO> productResponse =
+                restTemplate.getForEntity(fakeStoreGetProductURL, FakeStoreProductResponseDTO.class);
+        return productResponse.getBody();
+    }
+
+    public List<FakeStoreCartResponseDTO> getCartByUserId(int userId) {
+        if(userId < 1) {
+            return null;
+        }
+        // 1st thing - build the URL (https://fakestoreapi.com/carts?userId=1)
+        String fakeStoreGetCartForUserURL = fakeStoreAPIBaseUrl.concat(fakeStoreAPICartForUser).concat(String.valueOf(userId));
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        // we have to create separate dto for this
+        ResponseEntity<FakeStoreCartResponseDTO[]> cartResponse =
+                restTemplate.getForEntity(fakeStoreGetCartForUserURL, FakeStoreCartResponseDTO[].class);
+        return List.of(cartResponse.getBody());
+    }
+
 }
 
 
@@ -56,5 +82,40 @@ FakeStoreProductResponseDTO by looking at the json of fakestore but the call is 
 all products it will return array of products.
 rest template does not support list. we get response in ResponseEntity with some http code
 
+-----------------------------------------------------------------------------------------------------------
 
+
+https://fakestoreapi.com/carts?userId=1 -> get cart by userId, and userId is a query param
+This thing ?userId=1 is called as query param
+what is path variable, etc in the api ka class
+30th april - what is api, query param, path param, headers, authentication, token, cookies.
+everything i will discuss
+
+for now you need to know userId is a query param
+https://fakestoreapi.com - this is already part of our application.properties
+
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "date": "2020-03-02T00:00:00.000Z",
+    "products": [
+      {
+        "productId": 1,
+        "quantity": 4
+      },
+      {
+        "productId": 2,
+        "quantity": 1
+      },
+      {
+        "productId": 3,
+        "quantity": 6
+      }
+    ],
+    "__v": 0
+  },
+
+    we have to create dto for this
+]
  */
